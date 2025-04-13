@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметка</title>
+    <link href="/style.css" rel="stylesheet" />
+</head>
+<header>
+    <marquee>Зенкин Кирилл ИС-2223Д</marquee>
+</header>
+<header class ="header-image">
+<!--    <img src="https://i.pinimg.com/originals/58/6e/51/586e51559dc40f48cd8ce65af9c1522f.gif" width="300"/>-->
+</header>
+<body>
+<div class="container">
+    <h1>Оставьте свою заметку</h1>
+    <form method="post" action="/note">
+        <textarea name="content" placeholder="Введите заметку..."></textarea>
+        <br>
+        <button type="submit" class="button">Сохранить</button>
+        <a href="/" class="button">Назад</a>
+    </form>
+</div>
+</body>
+<footer class="footer">
+    <p>© 2025 pepega - прав нет</p>
+</footer>
+</html>
