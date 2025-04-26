@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "user_text")
 public class User_textDBEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

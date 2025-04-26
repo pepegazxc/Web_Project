@@ -16,9 +16,9 @@ public class UserTextRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void addNewUserText(UsersDBEntity usersDBEntity, Long textId) {
+    public void addNewUserText(Long userId, Long textId) {
         String QUERY = "INSERT INTO user_text(user_id, text_id) VALUES (?, ?)";
 
-        jdbcTemplate.update(QUERY, usersDBEntity.getId(), textId);
+        jdbcTemplate.update(QUERY, userId, textId);
     }
 }

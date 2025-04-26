@@ -1,6 +1,7 @@
 package org.example.web_project.Controller;
 
 import org.example.web_project.Service.TextService;
+import org.example.web_project.Service.UsersService;
 import org.example.web_project.UserController.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,15 @@ import java.util.List;
 public class NotesController {
 
     private final TextService addTextService;
+    private final UsersService usersService;
 
     private final List<String> notes = new ArrayList<>();
     private final List<String> texts = new ArrayList<>();
 
     @Autowired
-    public NotesController(TextService addTextService) {
+    public NotesController(TextService addTextService, UsersService usersService) {
         this.addTextService = addTextService;
+        this.usersService = usersService;
     }
 
 
@@ -53,6 +56,13 @@ public class NotesController {
 
     @GetMapping("/login")
     public String login() {return "login";}
+
+    @PostMapping("/register")
+    public String addNewUser(@RequestBody UserRequest userRequest) {
+        usersService.addNewUser(userRequest);
+        System.out.println("Пользователь был успешно добавлен");
+        return "register";
+    }
 
     @PostMapping("/text")
     public String addText(@RequestBody UserRequest userRequest) {

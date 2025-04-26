@@ -9,6 +9,16 @@
 <div class="container">
     <h2>Регистрация</h2>
     <form th:action="@{/register}" method="post">
+
+        <label for="firstName">Имя</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Фамилия</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="phone">Телефон</label>
+        <input type="tel" id="phone" name="phone" required>
+
         <label for="username">Имя пользователя</label>
         <input type="text" id="username" name="username" required>
 
