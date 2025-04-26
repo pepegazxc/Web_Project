@@ -3,6 +3,15 @@ package org.example.web_project;
 public class UserRequest {
     private String Note;
     private String Text;
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNote() {
         return Note;
