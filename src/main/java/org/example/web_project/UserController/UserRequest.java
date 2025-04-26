@@ -1,8 +1,8 @@
-package org.example.web_project;
+package org.example.web_project.UserController;
 
 public class UserRequest {
-    private String Note;
-    private String Text;
+    private String note;
+    private String text;
     private long id;
 
     public long getId() {
@@ -14,18 +14,18 @@ public class UserRequest {
     }
 
     public String getNote() {
-        return Note;
+        return note;
     }
 
     public void setNote(String Note) {
-        this.Note = Note;
+        this.note = Note;
     }
 
     public String getText() {
-        return Text;
+        return text;
     }
 
     public void setText(String Text) {
-        this.Text = Text;
+        this.text = Text;
     }
 }

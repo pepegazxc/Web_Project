@@ -51,6 +51,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version> 3.4.4</version>
         </dependency>
+        <!-- dotenv for Java -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
