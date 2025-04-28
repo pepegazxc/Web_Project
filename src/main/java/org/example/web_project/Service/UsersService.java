@@ -26,8 +26,22 @@ public class UsersService {
         usersDBEntity.setUser_name(userRequest.getUser_name());
         usersDBEntity.setSurname(userRequest.getSurname());
         usersDBEntity.setPhone_number(userRequest.getPhone_number());
+        usersDBEntity.setPassword(userRequest.getPassword());
 
         usersRepository.addNewUser(usersDBEntity);
 
+    }
+
+    public void loginUser(UserRequest userRequest) {
+        UsersDBEntity usersDBEntity = new UsersDBEntity();
+        usersDBEntity.setName(userRequest.getName());
+        usersDBEntity.setEmail(userRequest.getEmail());
+        usersDBEntity.setPassword(userRequest.getPassword());
+        usersDBEntity.setUser_name(userRequest.getUser_name());
+        usersDBEntity.setSurname(userRequest.getSurname());
+        usersDBEntity.setPhone_number(userRequest.getPhone_number());
+        usersDBEntity.setPassword(userRequest.getPassword());
+
+        usersRepository.loginUser(usersDBEntity);
     }
 }

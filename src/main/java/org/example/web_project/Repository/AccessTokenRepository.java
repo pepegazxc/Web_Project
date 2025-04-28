@@ -20,8 +20,5 @@ public class AccessTokenRepository {
         String QUERY = "INSERT INTO acces_token(token) VALUES (?)";
 
         jdbcTemplate.update(QUERY, token);
-
-        //Сделать так чтобы токен был константой при создании
-
     }
 }

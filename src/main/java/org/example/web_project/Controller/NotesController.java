@@ -1,5 +1,6 @@
 package org.example.web_project.Controller;
 
+import org.example.web_project.Service.AccessTokenService;
 import org.example.web_project.Service.TextService;
 import org.example.web_project.Service.UsersService;
 import org.example.web_project.UserController.UserRequest;
@@ -15,14 +16,16 @@ public class NotesController {
 
     private final TextService addTextService;
     private final UsersService usersService;
+    private final AccessTokenService accessTokenService;
 
     private final List<String> notes = new ArrayList<>();
     private final List<String> texts = new ArrayList<>();
 
     @Autowired
-    public NotesController(TextService addTextService, UsersService usersService) {
+    public NotesController(TextService addTextService, UsersService usersService, AccessTokenService accessTokenService) {
         this.addTextService = addTextService;
         this.usersService = usersService;
+        this.accessTokenService = accessTokenService;
     }
 
 
@@ -54,12 +57,10 @@ public class NotesController {
     @GetMapping("/register")
     public String register() {return "register";}
 
-    @GetMapping("/login")
-    public String login() {return "login";}
-
     @PostMapping("/register")
     public String addNewUser(@RequestBody UserRequest userRequest) {
         usersService.addNewUser(userRequest);
+        accessTokenService.addAccessToken();
         System.out.println("Пользователь был успешно добавлен");
         return "register";
     }
@@ -69,5 +70,12 @@ public class NotesController {
         addTextService.addNewText(userRequest);
         System.out.println("Текст был успешно добавлен");
         return "text";
+    }
+
+    @GetMapping("/login")
+    public String loginUser(@RequestBody UserRequest userRequest) {
+        usersService.loginUser(userRequest);
+        System.out.println("Пользователь успешно вошел!");
+        return "Верный пользователь";
     }
 }
