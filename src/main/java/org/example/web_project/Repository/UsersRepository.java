@@ -37,7 +37,7 @@ public class UsersRepository {
         return keyHolder.getKey().longValue();
     }
 
-    public String  loginUser(UsersDBEntity usersDBEntity) {
+    public void  loginUser(UsersDBEntity usersDBEntity) {
         String QUERY = "SELECT * FROM users WHERE name = ? AND surname = ? AND phone_number = ? AND email=? AND user_name=? AND password=? ";
 
         jdbcTemplate.update(QUERY, usersDBEntity.getName(), usersDBEntity.getSurname(), usersDBEntity.getPhone_number(), usersDBEntity.getEmail(), usersDBEntity.getUser_name() ,usersDBEntity.getPassword());
