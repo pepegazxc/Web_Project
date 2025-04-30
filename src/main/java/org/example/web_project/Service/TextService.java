@@ -9,8 +9,11 @@ import org.example.web_project.Repository.UsersRepository;
 import org.example.web_project.UserController.UserRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
-public class    TextService {
+public class TextService {
 
     private final TextRepository textRepository;
     private final UserTextRepository userTextRepository;

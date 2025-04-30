@@ -76,6 +76,6 @@ public class NotesController {
     public String loginUser(@RequestBody UserRequest userRequest) {
         usersService.loginUser(userRequest);
         System.out.println("Пользователь успешно вошел!");
-        return "Верный пользователь";
+        return "index";
     }
 }

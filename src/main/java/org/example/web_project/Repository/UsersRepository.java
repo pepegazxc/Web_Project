@@ -2,12 +2,14 @@ package org.example.web_project.Repository;
 
 import org.example.web_project.Entity.UsersDBEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.Optional;
 
 @Repository
 public class UsersRepository {
@@ -37,9 +39,25 @@ public class UsersRepository {
         return keyHolder.getKey().longValue();
     }
 
-    public void  loginUser(UsersDBEntity usersDBEntity) {
-        String QUERY = "SELECT * FROM users WHERE name = ? AND surname = ? AND phone_number = ? AND email=? AND user_name=? AND password=? ";
+    public String loginUser(UsersDBEntity usersDBEntity) {
+        String QUERY = "SELECT user_name FROM users WHERE name = ? AND surname = ? AND phone_number = ? AND email=? AND user_name=? AND password=? ";
 
-        jdbcTemplate.update(QUERY, usersDBEntity.getName(), usersDBEntity.getSurname(), usersDBEntity.getPhone_number(), usersDBEntity.getEmail(), usersDBEntity.getUser_name() ,usersDBEntity.getPassword());
+        try {
+            String user_name = jdbcTemplate.queryForObject(
+                    QUERY,
+                    new Object[]{
+                            usersDBEntity.getName(),
+                            usersDBEntity.getSurname(),
+                            usersDBEntity.getPhone_number(),
+                            usersDBEntity.getEmail(),
+                            usersDBEntity.getUser_name(),
+                            usersDBEntity.getPassword()
+                    },
+                    String.class
+            );
+            return user_name;
+        } catch (EmptyResultDataAccessException e) {
+            return "Ошибка, пустая строка или пользователь не был найден";
+        }
     }
 }
