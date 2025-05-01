@@ -8,22 +8,22 @@ import java.util.List;
 @Component
 public class UserSessionStorage {
 
-    private final List<Long> userID = new ArrayList<>();
-    private final List<String> token = new ArrayList<>();
+    private Long userID;
+    private Long tokenID;
 
-    public List<Long> getUserID() {
+    public Long getUserID() {
         return userID;
     }
-    public List<String> getToken() {
-        return token;
+    public Long getTokenID() {
+        return tokenID;
     }
 
-    public void addToken(String token) {
-        this.token.add(token);
+    public void addTokenID(long token) {
+        this.tokenID = token;
     }
 
     public void addUserID(long userID) {
-        this.userID.add(userID);
+        this.userID = userID;
     }
 
 

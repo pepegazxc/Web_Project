@@ -35,7 +35,6 @@ public class UsersRepository {
             ps.setString(6, usersDBEntity.getPassword());
             return ps;
         }, keyHolder);
-
         return keyHolder.getKey().longValue();
     }
 

@@ -20,16 +20,16 @@ public class AccessTokenRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String addAccessToken(String token) {
+    public Long addAccessToken(String token) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String QUERY = "INSERT INTO acces_token(token) VALUES (?)";
 
         jdbcTemplate.update(connect -> {
-            PreparedStatement ps = connect.prepareStatement(QUERY);
+            PreparedStatement ps = connect.prepareStatement(QUERY, new String[]{"id"});
             ps.setString(1, token);
             return ps;
         },keyHolder);
 
-        return keyHolder.getKey().toString();
+        return keyHolder.getKey().longValue();
     }
 }

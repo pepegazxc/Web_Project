@@ -59,8 +59,8 @@ public class NotesController {
 
     @PostMapping("/register")
     public String addNewUser(@RequestBody UserRequest userRequest) {
+        accessTokenService.userADDToken();
         usersService.addNewUser(userRequest);
-        accessTokenService.addAccessToken();
         System.out.println("Пользователь был успешно добавлен");
         return "register";
     }

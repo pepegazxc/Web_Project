@@ -24,8 +24,6 @@ public class Access_tokenDBEntity {
         this.id = id;
     }
 
-
-
     public Long getId() {
         return id;
     }

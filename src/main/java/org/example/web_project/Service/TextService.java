@@ -6,7 +6,9 @@ import org.example.web_project.Entity.UsersDBEntity;
 import org.example.web_project.Repository.TextRepository;
 import org.example.web_project.Repository.UserTextRepository;
 import org.example.web_project.Repository.UsersRepository;
+import org.example.web_project.SessionStorage.UserSessionStorage;
 import org.example.web_project.UserController.UserRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +21,14 @@ public class TextService {
     private final UserTextRepository userTextRepository;
     private final UsersRepository usersRepository;
 
+    private final UserSessionStorage userSessionStorage;
 
-    public TextService(TextRepository textRepository, UserTextRepository userTextRepository, UsersRepository usersRepository) {
+    @Autowired
+    public TextService(TextRepository textRepository, UserTextRepository userTextRepository, UsersRepository usersRepository, UserSessionStorage userSessionStorage) {
         this.textRepository = textRepository;
         this.userTextRepository = userTextRepository;
         this.usersRepository = usersRepository;
+        this.userSessionStorage = userSessionStorage;
     }
 
     public void addNewText(UserRequest userRequest) {
@@ -34,7 +39,8 @@ public class TextService {
         usersDBEntity.setId(userRequest.getId());
 
         Long text_id = textRepository.addNewText(textDBEntity);
-        Long user_id = usersRepository.addNewUser(usersDBEntity);
+
+        Long user_id = userSessionStorage.getUserID();
 
         userTextRepository.addNewUserText(user_id, text_id);
     }
