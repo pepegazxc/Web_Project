@@ -1,10 +1,7 @@
 package org.example.web_project.Service;
 
 import org.example.web_project.Entity.UsersDBEntity;
-import org.example.web_project.Repository.TextRepository;
-import org.example.web_project.Repository.UserTextRepository;
-import org.example.web_project.Repository.UserTokenRepository;
-import org.example.web_project.Repository.UsersRepository;
+import org.example.web_project.Repository.*;
 import org.example.web_project.SessionStorage.UserSessionStorage;
 import org.example.web_project.UserController.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +12,15 @@ public class UsersService {
 
     private final UsersRepository usersRepository;
     private final UserTokenRepository userTokenRepository;
+    private final AccessTokenRepository accessTokenRepository;
 
     private final UserSessionStorage userSessionStorage;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository, UserTokenRepository userTokenRepository, UserSessionStorage userSessionStorage) {
+    public UsersService(UsersRepository usersRepository, UserTokenRepository userTokenRepository, AccessTokenRepository accessTokenRepository, UserSessionStorage userSessionStorage) {
         this.usersRepository = usersRepository;
         this.userTokenRepository = userTokenRepository;
+        this.accessTokenRepository = accessTokenRepository;
         this.userSessionStorage = userSessionStorage;
     }
 

@@ -20,6 +20,7 @@ public class UsersDBEntity {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String user_name;
 
     private String password;

@@ -75,6 +75,7 @@ public class NotesController {
     @GetMapping("/login")
     public String loginUser(@RequestBody UserRequest userRequest) {
         usersService.loginUser(userRequest);
+        accessTokenService.assignTokenToUser(userRequest);
         System.out.println("Пользователь успешно вошел!");
         return "index";
     }
