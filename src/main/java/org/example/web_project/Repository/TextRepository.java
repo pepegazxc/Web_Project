@@ -1,6 +1,7 @@
 package org.example.web_project.Repository;
 
 import org.example.web_project.Entity.TextDBEntity;
+import org.example.web_project.Exceptions.EmptyRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -20,15 +21,20 @@ public class TextRepository {
     }
 
     public Long addNewText(TextDBEntity textDBEntity) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        String QUERY = "INSERT INTO texts(text) VALUES (?)";
+        if (textDBEntity.getText().isEmpty()) {
+            throw new EmptyRequest("Please, fill in all the fields");
+        } else {
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(QUERY, new String[]{"id"});
-            ps.setString(1, textDBEntity.getText());
-            return ps;
-        }, keyHolder);
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            String QUERY = "INSERT INTO texts(text) VALUES (?)";
 
-        return keyHolder.getKey().longValue();
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(QUERY, new String[]{"id"});
+                ps.setString(1, textDBEntity.getText());
+                return ps;
+            }, keyHolder);
+
+            return keyHolder.getKey().longValue();
+        }
     }
 }

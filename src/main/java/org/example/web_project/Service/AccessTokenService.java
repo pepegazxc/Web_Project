@@ -37,17 +37,28 @@ public class AccessTokenService {
         assignTokenToLoginUser(usersDBEntity);
     }
 
+    public void addTokenToNewUser(){
+        assignTokenToNewUser();
+    }
+
     public void userADDToken(){
         addAccessToken();
     }
 
     private void addAccessToken() {
         AccessToken accessToken = new AccessToken();
-        String token = accessToken.generateToken();
+        userSessionStorage.addToken(
+                accessToken.generateToken());
 
-        Long tokenID = accessTokenRepository.addAccessToken(token);
+        Long tokenID = accessTokenRepository.addAccessToken(
+                userSessionStorage.getToken());
 
         userSessionStorage.addTokenID(tokenID);
+        addTokenToNewUser();
+    }
+
+    private void assignTokenToNewUser() {
+        userTokenRepository.addToken(userSessionStorage.getUserID(), userSessionStorage.getTokenID());
     }
 
     private void assignTokenToLoginUser(UsersDBEntity usersDBEntity) {

@@ -35,8 +35,6 @@ public class UsersService {
         usersDBEntity.setPassword(userRequest.getPassword());
 
         userSessionStorage.addUserID(usersRepository.addNewUser(usersDBEntity));
-
-        userTokenRepository.addToken(userSessionStorage.getUserID(), userSessionStorage.getTokenID());
     }
 
     public void loginUser(UserRequest userRequest) {

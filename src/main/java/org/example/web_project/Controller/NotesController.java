@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class NotesController {
 
-    private final TextService addTextService;
+    private final TextService textService;
     private final UsersService usersService;
     private final AccessTokenService accessTokenService;
 
@@ -23,7 +23,7 @@ public class NotesController {
 
     @Autowired
     public NotesController(TextService addTextService, UsersService usersService, AccessTokenService accessTokenService) {
-        this.addTextService = addTextService;
+        this.textService = addTextService;
         this.usersService = usersService;
         this.accessTokenService = accessTokenService;
     }
@@ -59,15 +59,15 @@ public class NotesController {
 
     @PostMapping("/register")
     public String addNewUser(@RequestBody UserRequest userRequest) {
-        accessTokenService.userADDToken();
         usersService.addNewUser(userRequest);
+        accessTokenService.userADDToken();
         System.out.println("Пользователь был успешно добавлен");
         return "register";
     }
 
     @PostMapping("/text")
     public String addText(@RequestBody UserRequest userRequest) {
-        addTextService.addNewText(userRequest);
+        textService.addNewText(userRequest);
         System.out.println("Текст был успешно добавлен");
         return "text";
     }

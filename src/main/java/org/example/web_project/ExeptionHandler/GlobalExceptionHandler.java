@@ -1,5 +1,7 @@
 package org.example.web_project.ExeptionHandler;
 
+import org.example.web_project.Exceptions.EmptyRequest;
+import org.example.web_project.Exceptions.TokenException;
 import org.example.web_project.Exceptions.UserNotFound;
 import org.example.web_project.Exceptions.UserWithThatDataAlreadyExist;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,13 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(EmptyRequest.class)
+    public ResponseEntity<Map<String, String>> handleEmptyRequest(EmptyRequest emptyRequest) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", emptyRequest.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(UserNotFound.class)
     public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFound userNotFound) {
         Map<String, String> response = new HashMap<String, String>();
@@ -24,6 +33,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleUserWithThatDataAlreadyExist(UserWithThatDataAlreadyExist userWithThatDataAlreadyExist) {
         Map<String, String> response = new HashMap<>();
         response.put("message", userWithThatDataAlreadyExist.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<Map<String, String>> handleTokenException(TokenException tokenException) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", tokenException.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
