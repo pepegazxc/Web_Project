@@ -17,8 +17,6 @@ import java.util.List;
 @Repository
 public class TextRepository {
 
-    private List<String> usersTexts;
-
     private final JdbcTemplate jdbcTemplate;
     private final TextsChecks textsChecks;
 
@@ -47,9 +45,7 @@ public class TextRepository {
     }
 
     public List<String> showAllTexts() {
-        textsChecks.checkList(usersTexts);
-
-        addTextToList();
+        List<String> usersTexts = addTextToList();
 
         if (usersTexts.isEmpty()) {
             throw new EmptyStorage("Right now you don't have any texts");
@@ -58,10 +54,8 @@ public class TextRepository {
         }
     }
 
-    public List<String> deleteAllTexts() {
-        textsChecks.checkList(usersTexts);
-
-        addTextToList();
+    public String deleteAllTexts() {
+        List<String> usersTexts = addTextToList();
 
         if (usersTexts.isEmpty()) {
             throw new EmptyStorage("Right now you don't have any texts");
@@ -75,15 +69,15 @@ public class TextRepository {
             jdbcTemplate.update(QUERY);
             jdbcTemplate.update(QUERY2);
 
-            return usersTexts;
+            return "All texts have been deleted!";
         }
     }
 
-    private void addTextToList() {
+    private List<String> addTextToList() {
         String QUERY = "SELECT text FROM texts";
-        usersTexts = (jdbcTemplate.queryForList(
+        return jdbcTemplate.queryForList(
                 QUERY,
                 String.class
-        ));
+        );
     }
 }
