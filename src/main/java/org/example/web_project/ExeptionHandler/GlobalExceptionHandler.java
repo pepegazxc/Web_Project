@@ -1,9 +1,6 @@
 package org.example.web_project.ExeptionHandler;
 
-import org.example.web_project.Exceptions.EmptyRequest;
-import org.example.web_project.Exceptions.TokenException;
-import org.example.web_project.Exceptions.UserNotFound;
-import org.example.web_project.Exceptions.UserWithThatDataAlreadyExist;
+import org.example.web_project.Exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,6 +38,13 @@ public class GlobalExceptionHandler {
         Map<String, String> response = new HashMap<>();
         response.put("message", tokenException.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmptyStorage.class)
+    public ResponseEntity<Map<String, String>> handleEmptyStorage(EmptyStorage emptyStorage) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", emptyStorage.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }

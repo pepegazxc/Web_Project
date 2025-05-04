@@ -1,7 +1,9 @@
 package org.example.web_project.Repository;
 
+import org.example.web_project.Cheks.TextsChecks;
 import org.example.web_project.Entity.TextDBEntity;
 import org.example.web_project.Exceptions.EmptyRequest;
+import org.example.web_project.Exceptions.EmptyStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -9,15 +11,21 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TextRepository {
 
+    private List<String> usersTexts;
+
     private final JdbcTemplate jdbcTemplate;
+    private final TextsChecks textsChecks;
 
     @Autowired
-    public TextRepository(JdbcTemplate jdbcTemplate) {
+    public TextRepository(JdbcTemplate jdbcTemplate, TextsChecks textsChecks) {
         this.jdbcTemplate = jdbcTemplate;
+        this.textsChecks = textsChecks;
     }
 
     public Long addNewText(TextDBEntity textDBEntity) {
@@ -36,5 +44,46 @@ public class TextRepository {
 
             return keyHolder.getKey().longValue();
         }
+    }
+
+    public List<String> showAllTexts() {
+        textsChecks.checkList(usersTexts);
+
+        addTextToList();
+
+        if (usersTexts.isEmpty()) {
+            throw new EmptyStorage("Right now you don't have any texts");
+        }else{
+            return usersTexts;
+        }
+    }
+
+    public List<String> deleteAllTexts() {
+        textsChecks.checkList(usersTexts);
+
+        addTextToList();
+
+        if (usersTexts.isEmpty()) {
+            throw new EmptyStorage("Right now you don't have any texts");
+        }else{
+
+            usersTexts.clear();
+
+            String QUERY = "DELETE FROM user_text";
+            String QUERY2 = "DELETE FROM texts";
+
+            jdbcTemplate.update(QUERY);
+            jdbcTemplate.update(QUERY2);
+
+            return usersTexts;
+        }
+    }
+
+    private void addTextToList() {
+        String QUERY = "SELECT text FROM texts";
+        usersTexts = (jdbcTemplate.queryForList(
+                QUERY,
+                String.class
+        ));
     }
 }

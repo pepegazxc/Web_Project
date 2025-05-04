@@ -46,7 +46,8 @@ public class UserTokenRepository {
 
         if (!Objects.equals(user_id, userSessionStorage.getUserID())) {
                 throw new TokenException("Something went wrong when checking token");
-            }
+            }else {
             return true;
+        }
     }
 }

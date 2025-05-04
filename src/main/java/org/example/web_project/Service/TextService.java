@@ -44,4 +44,16 @@ public class TextService {
         }
 
     }
+
+    public void showAllTexts() {
+        if (userTokenRepository.checkToken()) {
+            textRepository.showAllTexts();
+        }
+    }
+
+    public void deleteAllTexts() {
+        if (userTokenRepository.checkToken()) {
+            textRepository.deleteAllTexts();
+        }
+    }
 }

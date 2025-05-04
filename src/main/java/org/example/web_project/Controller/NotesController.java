@@ -5,9 +5,11 @@ import org.example.web_project.Service.TextService;
 import org.example.web_project.Service.UsersService;
 import org.example.web_project.UserController.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +51,6 @@ public class NotesController {
         return "showNote";
     }
 
-    @GetMapping("/showText")
-    public String showText() {
-        return "showText";
-    }
-
     @GetMapping("/register")
     public String register() {return "register";}
 
@@ -78,5 +75,17 @@ public class NotesController {
         accessTokenService.assignTokenToUser(userRequest);
         System.out.println("Пользователь успешно вошел!");
         return "index";
+    }
+
+    @GetMapping ("/showTexts")
+    public String showText() {
+        textService.showAllTexts();
+        return "showText";
+    }
+
+    @DeleteMapping("/showTexts")
+    public String deleteAllTexts() {
+        textService.deleteAllTexts();
+        return "showText";
     }
 }
