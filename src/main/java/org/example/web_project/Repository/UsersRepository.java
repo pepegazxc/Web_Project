@@ -1,5 +1,6 @@
 package org.example.web_project.Repository;
 
+import org.example.web_project.Cheks.UserChecks;
 import org.example.web_project.Entity.UsersDBEntity;
 import org.example.web_project.Exceptions.EmptyRequest;
 import org.example.web_project.Exceptions.UserNotFound;
@@ -21,50 +22,41 @@ import java.util.Optional;
 public class UsersRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserChecks userChecks;
 
     @Autowired
-    public UsersRepository(JdbcTemplate jdbcTemplate) {
+    public UsersRepository(JdbcTemplate jdbcTemplate, UserChecks userChecks) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userChecks = userChecks;
     }
 
     public Long addNewUser(UsersDBEntity usersDBEntity) {
-        if (usersDBEntity.getName().isEmpty() ||
-                usersDBEntity.getSurname().isEmpty() ||
-                usersDBEntity.getPhone_number().isEmpty() ||
-                usersDBEntity.getEmail().isEmpty() ||
-                usersDBEntity.getUser_name().isEmpty() ||
-                usersDBEntity.getPassword().isEmpty()) {
-            throw new EmptyRequest("Please fill in all the fields.");
-        }else {
+        userChecks.registrationFieldCheck(usersDBEntity);
 
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            String QUERY = "INSERT INTO users(name, surname, phone_number, email, user_name, password) VALUES (?, ?, ?, ?, ?, ?) ";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        String QUERY = "INSERT INTO users(name, surname, phone_number, email, user_name, password) VALUES (?, ?, ?, ?, ?, ?) ";
 
-            try {
-                jdbcTemplate.update(connection -> {
+        try {
+            jdbcTemplate.update(connection -> {
 
-                    PreparedStatement ps = connection.prepareStatement(QUERY, new String[]{"id"});
-                    ps.setString(1, usersDBEntity.getName());
-                    ps.setString(2, usersDBEntity.getSurname());
-                    ps.setString(3, usersDBEntity.getPhone_number());
-                    ps.setString(4, usersDBEntity.getEmail());
-                    ps.setString(5, usersDBEntity.getUser_name());
-                    ps.setString(6, usersDBEntity.getPassword());
-                    return ps;
+                PreparedStatement ps = connection.prepareStatement(QUERY, new String[]{"id"});
+                ps.setString(1, usersDBEntity.getName());
+                ps.setString(2, usersDBEntity.getSurname());
+                ps.setString(3, usersDBEntity.getPhone_number());
+                ps.setString(4, usersDBEntity.getEmail());
+                ps.setString(5, usersDBEntity.getUser_name());
+                ps.setString(6, usersDBEntity.getPassword());
+                return ps;
                 }, keyHolder);
                 return keyHolder.getKey().longValue();
 
-            } catch (DuplicateKeyException e) {
-                throw new UserWithThatDataAlreadyExist("User with that data already exist. Please, enter another username, email or phone number.");
-            }
+        } catch (DuplicateKeyException e) {
+            throw new UserWithThatDataAlreadyExist("User with that data already exist. Please, enter another username, email or phone number.");
         }
     }
 
     public String loginUser(UsersDBEntity usersDBEntity) {
-        if (usersDBEntity.getUser_name().isEmpty() ||
-                usersDBEntity.getPassword().isEmpty()) {
-            throw new EmptyRequest("Please fill in all the fields.");
-        }else {
+        userChecks.loginFieldCheck(usersDBEntity);
 
         String QUERY = "SELECT user_name FROM users WHERE user_name = ? AND password = ? ";
 
@@ -81,7 +73,6 @@ public class UsersRepository {
             } catch (EmptyResultDataAccessException e) {
                 throw new UserNotFound("User not found. Please, check username and password.");
             }
-        }
     }
 
     public Long returnUserID(UsersDBEntity usersDBEntity) {
@@ -101,3 +92,4 @@ public class UsersRepository {
         return userID;
     }
 }
+

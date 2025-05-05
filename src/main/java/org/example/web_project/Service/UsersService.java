@@ -11,16 +11,12 @@ import org.springframework.stereotype.Service;
 public class UsersService {
 
     private final UsersRepository usersRepository;
-    private final UserTokenRepository userTokenRepository;
-    private final AccessTokenRepository accessTokenRepository;
 
     private final UserSessionStorage userSessionStorage;
 
     @Autowired
-    public UsersService(UsersRepository usersRepository, UserTokenRepository userTokenRepository, AccessTokenRepository accessTokenRepository, UserSessionStorage userSessionStorage) {
+    public UsersService(UsersRepository usersRepository, UserSessionStorage userSessionStorage) {
         this.usersRepository = usersRepository;
-        this.userTokenRepository = userTokenRepository;
-        this.accessTokenRepository = accessTokenRepository;
         this.userSessionStorage = userSessionStorage;
     }
 
@@ -32,7 +28,6 @@ public class UsersService {
         usersDBEntity.setUser_name(userRequest.getUser_name());
         usersDBEntity.setSurname(userRequest.getSurname());
         usersDBEntity.setPhone_number(userRequest.getPhone_number());
-        usersDBEntity.setPassword(userRequest.getPassword());
 
         userSessionStorage.addUserID(usersRepository.addNewUser(usersDBEntity));
     }
@@ -45,7 +40,6 @@ public class UsersService {
         usersDBEntity.setUser_name(userRequest.getUser_name());
         usersDBEntity.setSurname(userRequest.getSurname());
         usersDBEntity.setPhone_number(userRequest.getPhone_number());
-        usersDBEntity.setPassword(userRequest.getPassword());
 
         usersRepository.loginUser(usersDBEntity);
     }

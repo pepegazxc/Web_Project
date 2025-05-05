@@ -2,7 +2,6 @@ package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.TextsChecks;
 import org.example.web_project.Entity.TextDBEntity;
-import org.example.web_project.Exceptions.EmptyRequest;
 import org.example.web_project.Exceptions.EmptyStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +10,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -27,9 +25,7 @@ public class TextRepository {
     }
 
     public Long addNewText(TextDBEntity textDBEntity) {
-        if (textDBEntity.getText().isEmpty()) {
-            throw new EmptyRequest("Please, fill in all the fields");
-        } else {
+        textsChecks.textFieldCheck(textDBEntity);
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
             String QUERY = "INSERT INTO texts(text) VALUES (?)";
@@ -41,25 +37,20 @@ public class TextRepository {
             }, keyHolder);
 
             return keyHolder.getKey().longValue();
-        }
     }
 
     public List<String> showAllTexts() {
         List<String> usersTexts = addTextToList();
 
-        if (usersTexts.isEmpty()) {
-            throw new EmptyStorage("Right now you don't have any texts");
-        }else{
-            return usersTexts;
-        }
+        textsChecks.checkingForTexts(usersTexts);
+
+        return usersTexts;
     }
 
     public String deleteAllTexts() {
         List<String> usersTexts = addTextToList();
 
-        if (usersTexts.isEmpty()) {
-            throw new EmptyStorage("Right now you don't have any texts");
-        }else{
+        textsChecks.checkingForTexts(usersTexts);
 
             usersTexts.clear();
 
@@ -70,7 +61,6 @@ public class TextRepository {
             jdbcTemplate.update(QUERY2);
 
             return "All texts have been deleted!";
-        }
     }
 
     private List<String> addTextToList() {
