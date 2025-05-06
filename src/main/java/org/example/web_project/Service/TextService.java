@@ -56,4 +56,12 @@ public class TextService {
             textRepository.deleteAllTexts();
         }
     }
+
+    public void deleteChoosenText(UserRequest userRequest) {
+        if (userTokenRepository.checkToken()) {
+            TextDBEntity textDBEntity = new TextDBEntity();
+            textDBEntity.setId(userRequest.getId());
+            textRepository.deleteChosenText(textDBEntity);
+        }
+    }
 }

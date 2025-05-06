@@ -7,6 +7,7 @@ import org.example.web_project.Exceptions.EmptyStorage;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class TextsChecks {
@@ -17,9 +18,21 @@ public class TextsChecks {
         }
     }
 
-    public void checkingForTexts(List<String> usersTexts) {
+    public void chooseUserCheck (TextDBEntity textDBEntity) {
+        if (textDBEntity.getId() == null || textDBEntity.getId() == 0) {
+            throw new EmptyRequest("Please, fill in all the fields");
+        }
+    }
+
+    public void checkingForTextsInList(List<String> usersTexts) {
         if (usersTexts == null || usersTexts.isEmpty()) {
-            throw new EmptyStorage("ight now you don't have any texts");
+            throw new EmptyStorage("Right now you don't have any texts");
+        }
+    }
+
+    public void checkingForTextsInMap(Map<Long, String> usersTexts) {
+        if (usersTexts == null || usersTexts.isEmpty()) {
+            throw new EmptyStorage("Right now you don't have any texts");
         }
     }
 }

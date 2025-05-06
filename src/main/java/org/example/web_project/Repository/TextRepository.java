@@ -2,7 +2,6 @@ package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.TextsChecks;
 import org.example.web_project.Entity.TextDBEntity;
-import org.example.web_project.Exceptions.EmptyStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,7 +9,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class TextRepository {
@@ -42,7 +43,7 @@ public class TextRepository {
     public List<String> showAllTexts() {
         List<String> usersTexts = addTextToList();
 
-        textsChecks.checkingForTexts(usersTexts);
+        textsChecks.checkingForTextsInList(usersTexts);
 
         return usersTexts;
     }
@@ -50,7 +51,7 @@ public class TextRepository {
     public String deleteAllTexts() {
         List<String> usersTexts = addTextToList();
 
-        textsChecks.checkingForTexts(usersTexts);
+        textsChecks.checkingForTextsInList(usersTexts);
 
             usersTexts.clear();
 
@@ -63,11 +64,40 @@ public class TextRepository {
             return "All texts have been deleted!";
     }
 
+    public String deleteChosenText(TextDBEntity textDBEntity) {
+        Map<Long, String> usersTexts = addTextToMap();
+
+        textsChecks.checkingForTextsInMap(usersTexts);
+        textsChecks.chooseUserCheck(textDBEntity);
+
+        usersTexts.remove(textDBEntity.getId());
+
+        String QUERY = "DELETE FROM user_text WHERE text_id = ?";
+        String QUERY2 = "DELETE FROM texts WHERE id = ?";
+
+        jdbcTemplate.update(QUERY, textDBEntity.getId());
+        jdbcTemplate.update(QUERY2, textDBEntity.getId());
+
+        return "Chosen texts have been deleted!";
+    }
+
+
     private List<String> addTextToList() {
-        String QUERY = "SELECT text FROM texts";
+        String QUERY = "SELECT text FROM texts ORDER BY id";
         return jdbcTemplate.queryForList(
                 QUERY,
                 String.class
         );
+    }
+
+    private Map<Long, String> addTextToMap() {
+        String QUERY = "SELECT id, text FROM texts ORDER BY id";
+        return jdbcTemplate.query(QUERY, rs -> {
+            Map<Long, String> result = new HashMap<>();
+            while(rs.next()){
+                result.put(rs.getLong("id"), rs.getString("text"));
+            }
+            return result;
+        });
     }
 }

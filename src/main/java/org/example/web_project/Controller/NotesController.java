@@ -88,4 +88,10 @@ public class NotesController {
         textService.deleteAllTexts();
         return "showText";
     }
+
+    @DeleteMapping("/deleteChosenText")
+    public String deleteChosenText(@RequestBody UserRequest userRequest) {
+        textService.deleteChoosenText(userRequest);
+        return "deleteChosenText";
+    }
 }
