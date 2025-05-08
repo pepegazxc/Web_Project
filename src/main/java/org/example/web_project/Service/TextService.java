@@ -57,11 +57,21 @@ public class TextService {
         }
     }
 
-    public void deleteChoosenText(UserRequest userRequest) {
+    public void deleteChosenText(UserRequest userRequest) {
         if (userTokenRepository.checkToken()) {
             TextDBEntity textDBEntity = new TextDBEntity();
             textDBEntity.setId(userRequest.getId());
             textRepository.deleteChosenText(textDBEntity);
+        }
+    }
+
+    public void updateChosenText(UserRequest userRequest) {
+        if (userTokenRepository.checkToken()) {
+            TextDBEntity textDBEntity = new TextDBEntity();
+            textDBEntity.setId(userRequest.getId());
+            textDBEntity.setText(userRequest.getText());
+
+            textRepository.updateChosenText(textDBEntity);
         }
     }
 }

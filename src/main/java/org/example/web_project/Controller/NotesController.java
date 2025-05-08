@@ -91,7 +91,13 @@ public class NotesController {
 
     @DeleteMapping("/deleteChosenText")
     public String deleteChosenText(@RequestBody UserRequest userRequest) {
-        textService.deleteChoosenText(userRequest);
+        textService.deleteChosenText(userRequest);
         return "deleteChosenText";
+    }
+
+    @PatchMapping("/updateChosenText")
+    public String updateChosenText(@RequestBody UserRequest userRequest) {
+        textService.updateChosenText(userRequest);
+        return "updateChosenText";
     }
 }

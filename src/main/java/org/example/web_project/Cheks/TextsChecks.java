@@ -18,7 +18,7 @@ public class TextsChecks {
         }
     }
 
-    public void chooseUserCheck (TextDBEntity textDBEntity) {
+    public void chooseTextIDCheck (TextDBEntity textDBEntity) {
         if (textDBEntity.getId() == null || textDBEntity.getId() == 0) {
             throw new EmptyRequest("Please, fill in all the fields");
         }

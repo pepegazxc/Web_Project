@@ -68,7 +68,7 @@ public class TextRepository {
         Map<Long, String> usersTexts = addTextToMap();
 
         textsChecks.checkingForTextsInMap(usersTexts);
-        textsChecks.chooseUserCheck(textDBEntity);
+        textsChecks.chooseTextIDCheck(textDBEntity);
 
         usersTexts.remove(textDBEntity.getId());
 
@@ -79,6 +79,22 @@ public class TextRepository {
         jdbcTemplate.update(QUERY2, textDBEntity.getId());
 
         return "Chosen texts have been deleted!";
+    }
+
+    public String updateChosenText(TextDBEntity textDBEntity) {
+        Map<Long, String> usersTexts = addTextToMap();
+
+        textsChecks.checkingForTextsInMap(usersTexts);
+        textsChecks.textFieldCheck(textDBEntity);
+        textsChecks.chooseTextIDCheck(textDBEntity);
+
+        String QUERY = "UPDATE texts SET text = ? WHERE id = ?";
+
+        jdbcTemplate.update(QUERY, textDBEntity.getText(), textDBEntity.getId());
+
+        usersTexts.put(textDBEntity.getId(), textDBEntity.getText());
+
+        return "Chosen texts have been updated!";
     }
 
 
