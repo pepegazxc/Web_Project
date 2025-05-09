@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Обновление текста</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+
+<div class="header-image5"></div>
+
+<div class="container">
+    <h2>Обновить текст</h2>
+    <form method="post" action="/updateChosenText">
+
+        <input type="hidden" name="_method" value="patch">
+
+        <label for="id">ID текста:</label>
+        <input type="number" id="id" name="id" required>
+
+        <label for="text">Новый текст:</label>
+        <input type="text" id="text" name="text" required>
+
+        <button type="submit" class="button">Обновить</button>
+    </form>
+    <div th:if="${messageToUser}" class="alt-link">
+        <p th:text="${messageToUser}"></p>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>© 2025 pepega - прав нет</p>
+</footer>
 
 </body>
 </html>

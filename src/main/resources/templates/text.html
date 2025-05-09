@@ -13,11 +13,14 @@
 
     <h1>Напишите ваш текст</h1>
     <form method="post" action="/text">
-        <textarea name="content" placeholder="Введите текст..."></textarea>
+        <textarea name="text" placeholder="Введите текст..."></textarea>
         <br>
         <button type="submit" class="button">Сохранить</button>
         <a href="/" class="button">Назад</a>
     </form>
+    <div th:if="${messageToUser}" class="alt-link">
+        <p th:text="${messageToUser}"></p>
+    </div>
 </div>
 <footer class="footer">pepega - прав нет</footer>
 </body>

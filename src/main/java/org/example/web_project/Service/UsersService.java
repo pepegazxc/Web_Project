@@ -34,12 +34,8 @@ public class UsersService {
 
     public void loginUser(UserRequest userRequest) {
         UsersDBEntity usersDBEntity = new UsersDBEntity();
-        usersDBEntity.setName(userRequest.getName());
-        usersDBEntity.setEmail(userRequest.getEmail());
         usersDBEntity.setPassword(userRequest.getPassword());
         usersDBEntity.setUser_name(userRequest.getUser_name());
-        usersDBEntity.setSurname(userRequest.getSurname());
-        usersDBEntity.setPhone_number(userRequest.getPhone_number());
 
         usersRepository.loginUser(usersDBEntity);
     }

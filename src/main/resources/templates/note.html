@@ -17,6 +17,9 @@
         <button type="submit" class="button">Сохранить</button>
         <a href="/" class="button">Назад</a>
     </form>
+    <div th:if="${messageToUser}" class="alt-link">
+        <p th:text="${messageToUser}"></p>
+    </div>
 </div>
 </body>
 <footer class="footer">

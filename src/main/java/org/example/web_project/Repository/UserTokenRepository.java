@@ -28,7 +28,7 @@ public class UserTokenRepository {
         jdbcTemplate.update(QUERY, userID, tokenID);
     }
 
-    public boolean checkToken() {
+    public void checkToken() {
 
             String QUERY = "SELECT id FROM acces_token WHERE token = ?";
             Long token_id = jdbcTemplate.queryForObject(
@@ -46,8 +46,6 @@ public class UserTokenRepository {
 
         if (!Objects.equals(user_id, userSessionStorage.getUserID())) {
                 throw new TokenException("Something went wrong when checking token");
-            }else {
-            return true;
-        }
+            }
     }
 }

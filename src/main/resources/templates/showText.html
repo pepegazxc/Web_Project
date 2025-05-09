@@ -5,15 +5,24 @@
     <title>Все текста</title>
     <link href="/style.css" rel="stylesheet" />
 </head>
-<header class ="header-image5">
+<header class="header-image5">
 </header>
 <body>
 <div class="container">
     <h1>Все ваши текста:</h1>
-    <form method="get" action="/showAllTexts">
-        <br>
-        <a href="/" class="button">Назад</a>
+
+    <ul>
+        <li th:each="text : ${texts}" th:text="${text}"></li>
+    </ul>
+
+    <a href="/" class="button">Назад</a>
+    <form method="post" action="/showText">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="button">Удалить все текста</button>
     </form>
+    <div th:if="${text}" class="alt-link">
+        <p th:text="${text}"></p>
+    </div>
 </div>
 </body>
 <footer class="footer">

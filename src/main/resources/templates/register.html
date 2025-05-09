@@ -10,26 +10,23 @@
     <h2>Регистрация</h2>
     <form th:action="@{/register}" method="post">
 
-        <label for="firstName">Имя</label>
-        <input type="text" id="firstName" name="firstName" required>
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" required>
 
-        <label for="lastName">Фамилия</label>
-        <input type="text" id="lastName" name="lastName" required>
+        <label for="surname">Фамилия</label>
+        <input type="text" id="surname" name="surname" required>
 
-        <label for="phone">Телефон</label>
-        <input type="tel" id="phone" name="phone" required>
+        <label for="phone_number">Телефон</label>
+        <input type="tel" id="phone_number" name="phone_number" required>
 
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" name="username" required>
+        <label for="user_name">Имя пользователя</label>
+        <input type="text" id="user_name" name="user_name" required>
 
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
         <label for="password">Пароль</label>
         <input type="password" id="password" name="password" required>
-
-        <label for="confirmPassword">Подтвердите пароль</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
 
         <button type="submit">Зарегистрироваться</button>
     </form>

@@ -40,10 +40,10 @@ public class TextRepository {
             return keyHolder.getKey().longValue();
     }
 
-    public List<String> showAllTexts() {
-        List<String> usersTexts = addTextToList();
+    public Map<Long, String> showAllTexts() {
+        Map<Long, String> usersTexts = addTextToMap();
 
-        textsChecks.checkingForTextsInList(usersTexts);
+        textsChecks.checkingForTextsInMap(usersTexts);
 
         return usersTexts;
     }
