@@ -47,4 +47,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(EmptyID.class)
+    public ResponseEntity<Map<String, String>> handleEmptyID(EmptyID emptyID) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", emptyID.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoAccessToEditing.class)
+    public ResponseEntity<Map<String, String>> handleNoAccessToEditing(NoAccessToEditing method) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", method.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoAccessToDelete.class)
+    public ResponseEntity<Map<String, String>> handleThereIsNoAccessToDelete(NoAccessToDelete method) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", method.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }

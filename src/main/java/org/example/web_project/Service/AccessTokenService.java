@@ -31,39 +31,25 @@ public class AccessTokenService {
         this.userSessionStorage = userSessionStorage;
     }
 
-    public void assignTokenToUser(UserRequest userRequest) {
-        UsersDBEntity usersDBEntity = new UsersDBEntity();
-        usersDBEntity.setUser_name(userRequest.getUser_name());
-        assignTokenToLoginUser(usersDBEntity);
-    }
-
-    public void addTokenToNewUser(){
-        assignTokenToNewUser();
-    }
-
-    public void userADDToken(){
-        addAccessToken();
-    }
-
-    private void addAccessToken() {
-        AccessToken accessToken = new AccessToken();
-        userSessionStorage.addToken(
-                accessToken.generateToken());
-
-        Long tokenID = accessTokenRepository.addAccessToken(
-                userSessionStorage.getToken());
-
-        userSessionStorage.addTokenID(tokenID);
-        addTokenToNewUser();
-    }
-
-    private void assignTokenToNewUser() {
-        userTokenRepository.addToken(userSessionStorage.getUserID(), userSessionStorage.getTokenID());
-    }
-
-    private void assignTokenToLoginUser(UsersDBEntity usersDBEntity) {
-        userSessionStorage.addUserID(usersRepository.returnUserID(usersDBEntity));
+    public void assignTokenToLoginUser(UserRequest userRequest) {
+        UsersDBEntity usersDBEntity = new UsersDBEntity.Builder()
+                .user_name(userRequest.getUser_name())
+                .build();
+        userSessionStorage.addUserID(usersRepository.getUserID(usersDBEntity));
         userSessionStorage.addToken(accessTokenRepository.assignTokenToLoginUser());
     }
 
+    public void assignTokenToNewUser() {
+        AccessToken accessToken = new AccessToken();
+        userSessionStorage.addToken(
+                accessToken.generateToken()
+        );
+
+        Long tokenID = accessTokenRepository.addAccessToken(
+                userSessionStorage.getToken()
+        );
+
+        userSessionStorage.addTokenID(tokenID);
+        userTokenRepository.addToken(userSessionStorage.getUserID(), userSessionStorage.getTokenID());
+    }
 }

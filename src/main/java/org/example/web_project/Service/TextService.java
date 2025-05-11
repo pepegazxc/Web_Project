@@ -1,8 +1,6 @@
 package org.example.web_project.Service;
 
 import org.example.web_project.Entity.TextDBEntity;
-import org.example.web_project.Entity.UsersDBEntity;
-import org.example.web_project.Exceptions.EmptyStorage;
 import org.example.web_project.Repository.TextRepository;
 import org.example.web_project.Repository.UserTextRepository;
 import org.example.web_project.Repository.UserTokenRepository;
@@ -11,7 +9,6 @@ import org.example.web_project.UserController.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -32,40 +29,58 @@ public class TextService {
     }
 
     public void addNewText(UserRequest userRequest) {
-
-        userTokenRepository.checkToken();
-        TextDBEntity textDBEntity = new TextDBEntity();
-        UsersDBEntity usersDBEntity = new UsersDBEntity();
-        textDBEntity.setText(userRequest.getText());
-        textDBEntity.setId(userRequest.getId());
-        usersDBEntity.setId(userRequest.getId());
-        Long text_id = textRepository.addNewText(textDBEntity);
+        String token = userSessionStorage.getToken();
         Long user_id = userSessionStorage.getUserID();
+
+        userTokenRepository.checkToken(token, user_id);
+        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+                .id(userRequest.getId())
+                .text(userRequest.getText())
+                .build();
+
+        Long text_id = textRepository.addNewText(textDBEntity);
+
         userTextRepository.addNewUserText(user_id, text_id);
     }
 
     public Map<Long, String> showAllTexts() {
-        userTokenRepository.checkToken();
-        return textRepository.showAllTexts();
+        String token = userSessionStorage.getToken();
+        Long user_id = userSessionStorage.getUserID();
+
+        userTokenRepository.checkToken(token, user_id);
+        return textRepository.showAllTexts(user_id);
     }
 
     public void deleteAllTexts() {
-        userTokenRepository.checkToken();
-        textRepository.deleteAllTexts();
+        String token = userSessionStorage.getToken();
+        Long user_id = userSessionStorage.getUserID();
+
+        userTokenRepository.checkToken(token, user_id);
+        textRepository.deleteAllTexts(user_id);
     }
 
     public void deleteChosenText(UserRequest userRequest) {
-        userTokenRepository.checkToken();
-        TextDBEntity textDBEntity = new TextDBEntity();
-        textDBEntity.setId(userRequest.getId());
-        textRepository.deleteChosenText(textDBEntity);
+        String token = userSessionStorage.getToken();
+        Long user_id = userSessionStorage.getUserID();
+
+        userTokenRepository.checkToken(token, user_id);
+        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+                .id(userRequest.getId())
+                .build();
+
+        textRepository.deleteChosenText(textDBEntity, user_id);
     }
 
     public void updateChosenText(UserRequest userRequest) {
-        userTokenRepository.checkToken();
-        TextDBEntity textDBEntity = new TextDBEntity();
-        textDBEntity.setId(userRequest.getId());
-        textDBEntity.setText(userRequest.getText());
-        textRepository.updateChosenText(textDBEntity);
+        String token = userSessionStorage.getToken();
+        Long user_id = userSessionStorage.getUserID();
+
+        userTokenRepository.checkToken(token, user_id);
+        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+                .id(userRequest.getId())
+                .text(userRequest.getText())
+                .build();
+
+        textRepository.updateChosenText(textDBEntity, user_id);
     }
 }

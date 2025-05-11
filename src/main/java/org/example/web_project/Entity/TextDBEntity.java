@@ -26,4 +26,20 @@ public class TextDBEntity {
     public Long getId() {
         return id;
     }
+
+    public static class Builder {
+        private final TextDBEntity textDBEntity = new TextDBEntity();
+
+        public Builder text(String text) {
+            textDBEntity.setText(text);
+            return this;
+        }
+        public Builder id(Long id) {
+            textDBEntity.setId(id);
+            return this;
+        }
+        public TextDBEntity build() {
+            return textDBEntity;
+        }
+    }
 }

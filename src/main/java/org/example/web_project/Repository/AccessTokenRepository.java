@@ -13,6 +13,14 @@ import java.sql.PreparedStatement;
 
 @Repository
 public class AccessTokenRepository {
+    private static final String SQL_INSERT_NEW_TOKEN =
+            "INSERT INTO acces_token(token) VALUES (?)";
+
+    private static final String SQL_SELECT_TOKEN_ID_BY_USER_ID
+            = "SELECT token_id FROM user_token WHERE user_id = ?";
+
+    private static final String SQL_SELECT_TOKEN_FROM_DB =
+            "SELECT token FROM acces_token WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -26,10 +34,9 @@ public class AccessTokenRepository {
 
     public Long addAccessToken(String token) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String QUERY = "INSERT INTO acces_token(token) VALUES (?)";
 
         jdbcTemplate.update(connect -> {
-            PreparedStatement ps = connect.prepareStatement(QUERY, new String[]{"id"});
+            PreparedStatement ps = connect.prepareStatement(SQL_INSERT_NEW_TOKEN, new String[]{"id"});
             ps.setString(1, token);
             return ps;
         },keyHolder);
@@ -40,18 +47,14 @@ public class AccessTokenRepository {
     public String assignTokenToLoginUser() {
         Long userID = userSessionStorage.getUserID();
 
-        String QUERY = "SELECT token_id FROM user_token WHERE user_id = ?";
-
         Long token_id = jdbcTemplate.queryForObject(
-                QUERY,
+                SQL_SELECT_TOKEN_ID_BY_USER_ID,
                 new Object[]{userID},
                 Long.class
         );
 
-        String QUERY2 = "SELECT token FROM acces_token WHERE id = ?";
-
         String token = jdbcTemplate.queryForObject(
-                QUERY2,
+                SQL_SELECT_TOKEN_FROM_DB,
                 new Object[]{token_id},
                 String.class
         );

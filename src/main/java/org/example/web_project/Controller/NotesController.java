@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,7 +27,7 @@ public class NotesController {
     }
 
 
-    @GetMapping("/start")
+    @GetMapping("/index")
     public String index() {
         return "index";
     }
@@ -58,10 +56,13 @@ public class NotesController {
     @GetMapping("/updateChosenText")
     public String updateChosenText() {return "updateChosenText";}
 
+    @GetMapping("/deleteChosenText")
+    public String deleteChosenText() {return "deleteChosenText";}
+
     @PostMapping("/register")
     public String addNewUser(@ModelAttribute UserRequest userRequest) {
         usersService.addNewUser(userRequest);
-        accessTokenService.userADDToken();
+        accessTokenService.assignTokenToNewUser();
         System.out.println("Пользователь был успешно добавлен");
         return "index";
     }
@@ -79,7 +80,7 @@ public class NotesController {
         System.out.println("user_name: " + userRequest.getUser_name());
         System.out.println("password: " + userRequest.getPassword());
         usersService.loginUser(userRequest);
-        accessTokenService.assignTokenToUser(userRequest);
+        accessTokenService.assignTokenToLoginUser(userRequest);
         System.out.println("Пользователь успешно вошел!");
         return "index";
     }

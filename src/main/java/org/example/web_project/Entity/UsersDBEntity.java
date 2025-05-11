@@ -80,4 +80,36 @@ public class UsersDBEntity {
     public Long getId() {
         return id;
     }
+
+    public static class Builder {
+        private final UsersDBEntity user = new UsersDBEntity();
+
+        public Builder name(String name) {
+            user.setName(name);
+            return this;
+        }
+        public Builder surname(String surname) {
+            user.setSurname(surname);
+            return this;
+        }
+        public Builder phone_number(String phone_number) {
+            user.setPhone_number(phone_number);
+            return this;
+        }
+        public Builder email(String email) {
+            user.setEmail(email);
+            return this;
+        }
+        public Builder user_name(String user_name) {
+            user.setUser_name(user_name);
+            return this;
+        }
+        public Builder password(String password) {
+            user.setPassword(password);
+            return this;
+        }
+        public UsersDBEntity build() {
+            return user;
+        }
+    }
 }

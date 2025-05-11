@@ -20,6 +20,14 @@ import java.util.Optional;
 
 @Repository
 public class UsersRepository {
+    private static final String SQL_INSERT_NEW_USER_DATA =
+            "INSERT INTO users(name, surname, phone_number, email, user_name, password) VALUES (?, ?, ?, ?, ?, ?) ";
+
+    private static final String SQL_SELECT_USERNAME_FOR_LOGIN_USER =
+            "SELECT user_name FROM users WHERE user_name = ? AND password = ? ";
+
+    private static final String SQL_SELECT_USER_ID =
+            "SELECT id FROM users WHERE user_name = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final UserChecks userChecks;
@@ -34,12 +42,11 @@ public class UsersRepository {
         userChecks.registrationFieldCheck(usersDBEntity);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String QUERY = "INSERT INTO users(name, surname, phone_number, email, user_name, password) VALUES (?, ?, ?, ?, ?, ?) ";
 
         try {
             jdbcTemplate.update(connection -> {
 
-                PreparedStatement ps = connection.prepareStatement(QUERY, new String[]{"id"});
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT_NEW_USER_DATA, new String[]{"id"});
                 ps.setString(1, usersDBEntity.getName());
                 ps.setString(2, usersDBEntity.getSurname());
                 ps.setString(3, usersDBEntity.getPhone_number());
@@ -58,11 +65,9 @@ public class UsersRepository {
     public String loginUser(UsersDBEntity usersDBEntity) {
         userChecks.loginFieldCheck(usersDBEntity);
 
-        String QUERY = "SELECT user_name FROM users WHERE user_name = ? AND password = ? ";
-
             try {
                 String userName = jdbcTemplate.queryForObject(
-                        QUERY,
+                        SQL_SELECT_USERNAME_FOR_LOGIN_USER,
                         new Object[]{
                                 usersDBEntity.getUser_name(),
                                 usersDBEntity.getPassword()
@@ -75,15 +80,9 @@ public class UsersRepository {
             }
     }
 
-    public Long returnUserID(UsersDBEntity usersDBEntity) {
-        return getIDUser(usersDBEntity);
-    }
-
-    private Long getIDUser(UsersDBEntity usersDBEntity) {
-        String QUERY = "SELECT id FROM users WHERE user_name = ?";
-
+    public Long getUserID(UsersDBEntity usersDBEntity) {
         Long userID = jdbcTemplate.queryForObject(
-                QUERY,
+                SQL_SELECT_USER_ID,
                 new Object[]{
                         usersDBEntity.getUser_name()
                 },

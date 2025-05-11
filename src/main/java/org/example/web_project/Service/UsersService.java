@@ -21,22 +21,24 @@ public class UsersService {
     }
 
     public void addNewUser(UserRequest userRequest) {
-        UsersDBEntity usersDBEntity = new UsersDBEntity();
-        usersDBEntity.setName(userRequest.getName());
-        usersDBEntity.setEmail(userRequest.getEmail());
-        usersDBEntity.setPassword(userRequest.getPassword());
-        usersDBEntity.setUser_name(userRequest.getUser_name());
-        usersDBEntity.setSurname(userRequest.getSurname());
-        usersDBEntity.setPhone_number(userRequest.getPhone_number());
+        UsersDBEntity user = new UsersDBEntity.Builder()
+                .name(userRequest.getName())
+                .surname(userRequest.getSurname())
+                .phone_number(userRequest.getPhone_number())
+                .email(userRequest.getEmail())
+                .user_name(userRequest.getUser_name())
+                .password(userRequest.getPassword())
+                .build();
 
-        userSessionStorage.addUserID(usersRepository.addNewUser(usersDBEntity));
+        userSessionStorage.addUserID(usersRepository.addNewUser(user));
     }
 
     public void loginUser(UserRequest userRequest) {
-        UsersDBEntity usersDBEntity = new UsersDBEntity();
-        usersDBEntity.setPassword(userRequest.getPassword());
-        usersDBEntity.setUser_name(userRequest.getUser_name());
+        UsersDBEntity user = new UsersDBEntity.Builder()
+                .password(userRequest.getPassword())
+                .user_name(userRequest.getUser_name())
+                .build();
 
-        usersRepository.loginUser(usersDBEntity);
+        usersRepository.loginUser(user);
     }
 }

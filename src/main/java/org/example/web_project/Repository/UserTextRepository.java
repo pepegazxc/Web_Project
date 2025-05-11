@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserTextRepository {
+    private static final String SQL_INSERT_USER_TEXT_ID =
+            "INSERT INTO user_text(user_id, text_id) VALUES (?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -17,8 +19,6 @@ public class UserTextRepository {
     }
 
     public void addNewUserText(Long userId, Long textId) {
-        String QUERY = "INSERT INTO user_text(user_id, text_id) VALUES (?, ?)";
-
-        jdbcTemplate.update(QUERY, userId, textId);
+        jdbcTemplate.update(SQL_INSERT_USER_TEXT_ID, userId, textId);
     }
 }
