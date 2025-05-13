@@ -1,6 +1,7 @@
 package org.example.web_project.Controller;
 
 import org.example.web_project.Service.AccessTokenService;
+import org.example.web_project.Service.NoteService;
 import org.example.web_project.Service.TextService;
 import org.example.web_project.Service.UsersService;
 import org.example.web_project.UserController.UserRequest;
@@ -18,12 +19,14 @@ public class NotesController {
     private final TextService textService;
     private final UsersService usersService;
     private final AccessTokenService accessTokenService;
+    private final NoteService noteService;
 
     @Autowired
-    public NotesController(TextService addTextService, UsersService usersService, AccessTokenService accessTokenService) {
+    public NotesController(TextService addTextService, UsersService usersService, AccessTokenService accessTokenService, NoteService noteService) {
         this.textService = addTextService;
         this.usersService = usersService;
         this.accessTokenService = accessTokenService;
+        this.noteService = noteService;
     }
 
 
@@ -32,7 +35,7 @@ public class NotesController {
         return "index";
     }
 
-    @GetMapping("/note")
+    @GetMapping("/addNewNote")
     public String noteForm() {
         return "note";
     }
@@ -58,6 +61,13 @@ public class NotesController {
 
     @GetMapping("/deleteChosenText")
     public String deleteChosenText() {return "deleteChosenText";}
+
+    @PostMapping("/addNewNote")
+    public String addNewNote(@ModelAttribute UserRequest userRequest, Model model) {
+        noteService.addNewNote(userRequest);
+        model.addAttribute("messageToUser", "Note has been added!");
+        return "note";
+    }
 
     @PostMapping("/register")
     public String addNewUser(@ModelAttribute UserRequest userRequest) {

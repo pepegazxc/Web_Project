@@ -34,7 +34,6 @@ public class TextService {
 
         userTokenRepository.checkToken(token, user_id);
         TextDBEntity textDBEntity = new TextDBEntity.Builder()
-                .id(userRequest.getId())
                 .text(userRequest.getText())
                 .build();
 
