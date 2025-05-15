@@ -1,13 +1,16 @@
 package org.example.web_project.Service;
 
+import org.example.web_project.DTO.NoteDTO;
 import org.example.web_project.Entity.NoteDBEntity;
 import org.example.web_project.Repository.NoteRepository;
 import org.example.web_project.Repository.UserNoteRepository;
 import org.example.web_project.Repository.UserTokenRepository;
 import org.example.web_project.SessionStorage.UserSessionStorage;
-import org.example.web_project.UserController.UserRequest;
+import org.example.web_project.DTO.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NoteService {
@@ -37,5 +40,14 @@ public class NoteService {
         Long noteID = noteRepository.addNewNote(noteDB);
 
         userNoteRepository.addUserAndNoteID(userID, noteID);
+    }
+
+    public List<NoteDTO> showAllNotesWithData() {
+        Long userID = userSessionStorage.getUserID();
+        String token = userSessionStorage.getToken();
+
+        userTokenRepository.checkToken(token, userID);
+
+        return noteRepository.getAllNotesWithData(userID);
     }
 }

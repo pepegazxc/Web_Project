@@ -2,11 +2,8 @@ package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.UserChecks;
 import org.example.web_project.Entity.UsersDBEntity;
-import org.example.web_project.Exceptions.EmptyRequest;
 import org.example.web_project.Exceptions.UserNotFound;
 import org.example.web_project.Exceptions.UserWithThatDataAlreadyExist;
-import org.example.web_project.SessionStorage.UserSessionStorage;
-import org.example.web_project.UserController.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,7 +13,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
-import java.util.Optional;
 
 @Repository
 public class UsersRepository {

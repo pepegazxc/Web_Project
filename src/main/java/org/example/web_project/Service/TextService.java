@@ -5,7 +5,7 @@ import org.example.web_project.Repository.TextRepository;
 import org.example.web_project.Repository.UserTextRepository;
 import org.example.web_project.Repository.UserTokenRepository;
 import org.example.web_project.SessionStorage.UserSessionStorage;
-import org.example.web_project.UserController.UserRequest;
+import org.example.web_project.DTO.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

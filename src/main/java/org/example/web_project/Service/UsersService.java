@@ -3,7 +3,7 @@ package org.example.web_project.Service;
 import org.example.web_project.Entity.UsersDBEntity;
 import org.example.web_project.Repository.*;
 import org.example.web_project.SessionStorage.UserSessionStorage;
-import org.example.web_project.UserController.UserRequest;
+import org.example.web_project.DTO.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

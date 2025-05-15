@@ -1,4 +1,4 @@
-package org.example.web_project.UserController;
+package org.example.web_project.DTO;
 
 public class UserRequest {
     private String name;

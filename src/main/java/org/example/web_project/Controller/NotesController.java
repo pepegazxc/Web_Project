@@ -1,16 +1,18 @@
 package org.example.web_project.Controller;
 
+import org.example.web_project.DTO.NoteDTO;
 import org.example.web_project.Service.AccessTokenService;
 import org.example.web_project.Service.NoteService;
 import org.example.web_project.Service.TextService;
 import org.example.web_project.Service.UsersService;
-import org.example.web_project.UserController.UserRequest;
+import org.example.web_project.DTO.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -45,11 +47,6 @@ public class NotesController {
         return "text";
     }
 
-    @GetMapping("/showNote")
-    public String showNote() {
-        return "showNote";
-    }
-
     @GetMapping("/register")
     public String register() {return "register";}
 
@@ -67,6 +64,14 @@ public class NotesController {
         noteService.addNewNote(userRequest);
         model.addAttribute("messageToUser", "Note has been added!");
         return "note";
+    }
+
+
+    @GetMapping("/showNote")
+    public String showNote(Model model) {
+        List<NoteDTO> userNotes = noteService.showAllNotesWithData();
+        model.addAttribute("userNotes", userNotes);
+        return "showNote";
     }
 
     @PostMapping("/register")
