@@ -66,11 +66,17 @@ public class NotesController {
         return "note";
     }
 
-
     @GetMapping("/showNote")
     public String showNote(Model model) {
         List<NoteDTO> userNotes = noteService.showAllNotesWithData();
         model.addAttribute("userNotes", userNotes);
+        return "showNote";
+    }
+
+    @DeleteMapping("/showNote")
+    public String deleteNote(Model model) {
+        noteService.deleteAllUserNotes();
+        model.addAttribute("messageToUser", "Note has been deleted!");
         return "showNote";
     }
 

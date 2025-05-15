@@ -50,4 +50,13 @@ public class NoteService {
 
         return noteRepository.getAllNotesWithData(userID);
     }
+
+    public void deleteAllUserNotes () {
+        Long userID = userSessionStorage.getUserID();
+        String token = userSessionStorage.getToken();
+
+        userTokenRepository.checkToken(token, userID);
+
+        noteRepository.deleteAllUserNotes(userID);
+    }
 }

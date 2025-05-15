@@ -1,7 +1,5 @@
 package org.example.web_project.Repository;
 
-import org.example.web_project.Entity.TextDBEntity;
-import org.example.web_project.Entity.UsersDBEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

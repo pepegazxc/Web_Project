@@ -16,10 +16,13 @@
     </ul>
 
     <a href="/" class="button">Назад</a>
-<!--    <form method="post" action="/showText">-->
-<!--        <input type="hidden" name="_method" value="delete">-->
-<!--        <button type="submit" class="button">Удалить все текста</button>-->
-<!--    </form>-->
+    <form method="post" action="/showNote">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="button">Удалить все заметки</button>
+    </form>
+    <div th:if="${messageToUser}" class="alt-link">
+    <p th:text="${messageToUser}"></p>
+</div>
 </div>
 </body>
 <footer class="footer">

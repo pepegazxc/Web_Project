@@ -17,6 +17,10 @@ public class NoteRepository {
     private static final String SQL_INSERT_NEW_NOTE =
             "INSERT INTO notes(note) VALUES (?)";
 
+    private static final
+    String SQL_SELECT_NOTE_ID_FROM_USER_NOTE =
+            "SELECT note_id FROM user_note WHERE user_id = ?";
+
     private final JdbcTemplate jdbcTemplate;
     private final NotesChecks notesChecks;
 
@@ -58,6 +62,24 @@ public class NoteRepository {
                     rs.getTimestamp("created_at").toLocalDateTime()
             )
         );
+    }
+
+    public String deleteAllUserNotes(Long userID){
+        List<Long> notesIds = jdbcTemplate.queryForList(
+                SQL_SELECT_NOTE_ID_FROM_USER_NOTE,
+                Long.class,
+                userID);
+
+        notesChecks.checkingForNoteIdsInList(notesIds);
+
+        String deleteUserIdAndNoteIdByUserId = "DELETE FROM user_note WHERE user_id = ?";
+        jdbcTemplate.update(deleteUserIdAndNoteIdByUserId, userID);
+
+        for (Long noteId : notesIds) {
+            jdbcTemplate.update("DELETE FROM notes WHERE id = ?", noteId);
+        }
+
+        return "All notes have been deleted!";
     }
 
     private Map<Long, String> addNotesToMap(Long userID){
