@@ -72,4 +72,18 @@ public class NoteService {
         noteRepository.deleteChosenNotes(userID, noteDBEntity);
 
     }
+
+    public void updateChosenNote(UserRequest userRequest) {
+        Long userID = userSessionStorage.getUserID();
+        String token = userSessionStorage.getToken();
+
+        userTokenRepository.checkToken(token, userID);
+
+        NoteDBEntity noteDBEntity = new NoteDBEntity.Builder()
+                .note(userRequest.getNote())
+                .id(userRequest.getId())
+                .build();
+
+        noteRepository.updateChosenNote(noteDBEntity, userID);
+    }
 }

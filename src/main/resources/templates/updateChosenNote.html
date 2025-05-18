@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить заметку</title>
+    <link href="/style.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="header-image2"></div>
+
+<div class="container">
+    <h1>Изменить заметку</h1>
+    <form action="/updateChosenNote" method="post">
+        <input type="hidden" name="_method" value="patch">
+
+        <label for="id">ID заметки:</label>
+        <input type="number" id="id" name="id" required>
+
+        <label for="note">Новая заметка:</label>
+        <input type="text" id="note" name="note" required>
+
+        <button type="submit" class="button">Обновить заметку</button>
+    </form>
+
+    <div th:if="${messageToUser}" class="alt-link">
+        <p th:text="${messageToUser}"></p>
+    </div>
+
+    <div class="alt-link">
+        <a href="/" class="button">Назад</a>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>© 2025 pepega - прав нет</p>
+</footer>
+</body>
+</html>

@@ -54,6 +54,9 @@ public class NotesController {
     @GetMapping("/login")
     public String login() {return "login";}
 
+    @GetMapping("/updateChosenNote")
+    public String updateChosenNote() {return "updateChosenNote";}
+
     @GetMapping("/updateChosenText")
     public String updateChosenText() {return "updateChosenText";}
 
@@ -62,6 +65,13 @@ public class NotesController {
 
     @GetMapping("/deleteChosenText")
     public String deleteChosenText() {return "deleteChosenText";}
+
+    @PatchMapping("/updateChosenNote")
+    public String updateChosenNote(@ModelAttribute UserRequest userRequest, Model model) {
+        noteService.updateChosenNote(userRequest);
+        model.addAttribute("messageToUser", "Chosen note has been updated!");
+        return "updateChosenNote";
+    }
 
     @PostMapping("/addNewNote")
     public String addNewNote(@ModelAttribute UserRequest userRequest, Model model) {

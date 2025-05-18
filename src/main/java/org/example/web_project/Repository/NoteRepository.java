@@ -99,6 +99,21 @@ public class NoteRepository {
         return "Chosen notes have been deleted!";
     }
 
+    public String updateChosenNote(NoteDBEntity noteDBEntity, Long userID) {
+        notesChecks.checkingForIdOfNote(noteDBEntity);
+        notesChecks.noteFieldCheck(noteDBEntity);
+
+        if (!isNoteBelongsToUser(noteDBEntity.getId(), userID)) {
+            throw new NoAccessToEditing("You are not allowed to update this note!");
+        }
+
+        String updateChosenText = "UPDATE notes SET note = ? WHERE id = ?";
+
+        jdbcTemplate.update(updateChosenText, noteDBEntity.getNote(), noteDBEntity.getId());
+
+        return "Chosen notes have been updated!";
+    }
+
     private Map<Long, String> addNotesToMap(Long userID){
         List<Long> notesIds = jdbcTemplate.queryForList("select note_id from user_note where user_id = ?",
                 Long.class,
