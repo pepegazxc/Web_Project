@@ -3,6 +3,7 @@ package org.example.web_project.Repository;
 import org.example.web_project.Cheks.NotesChecks;
 import org.example.web_project.DTO.NoteDTO;
 import org.example.web_project.Entity.NoteDBEntity;
+import org.example.web_project.Exceptions.NoAccessToEditing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -82,6 +83,22 @@ public class NoteRepository {
         return "All notes have been deleted!";
     }
 
+    public String deleteChosenNotes(Long userID, NoteDBEntity noteDBEntity) {
+        notesChecks.checkingForIdOfNote(noteDBEntity);
+
+        if(!isNoteBelongsToUser(noteDBEntity.getId(), userID)) {
+            throw new NoAccessToEditing("You are not allowed to delete this note!");
+        }
+
+        String deleteUserIdAndNoteIdByUserId = "DELETE FROM user_note WHERE note_id = ?";
+        String deleteNoteById = "DELETE FROM notes WHERE id = ?";
+
+        jdbcTemplate.update(deleteUserIdAndNoteIdByUserId, noteDBEntity.getId());
+        jdbcTemplate.update(deleteNoteById, noteDBEntity.getId());
+
+        return "Chosen notes have been deleted!";
+    }
+
     private Map<Long, String> addNotesToMap(Long userID){
         List<Long> notesIds = jdbcTemplate.queryForList("select note_id from user_note where user_id = ?",
                 Long.class,
@@ -103,5 +120,11 @@ public class NoteRepository {
         });
     }
 
-
+    private boolean isNoteBelongsToUser(Long noteId, Long userId) {
+        String SQL_CHECK_OWNERSHIP = """
+        SELECT COUNT(*) FROM user_note WHERE note_id = ? AND user_id = ?
+    """;
+        Integer count = jdbcTemplate.queryForObject(SQL_CHECK_OWNERSHIP, Integer.class, noteId, userId);
+        return count != null && count > 0;
+    }
 }

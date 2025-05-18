@@ -21,4 +21,10 @@ public class NotesChecks {
             throw new EmptyID("Ids notes list is empty");
         }
     }
+
+    public void checkingForIdOfNote(NoteDBEntity entity){
+        if (entity.getId() == null) {
+            throw new EmptyRequest("Id of note is empty");
+        }
+    }
 }

@@ -63,14 +63,6 @@ public class TextRepository {
     }
 
     public String deleteAllTexts(Long userID) {
-        List<String> usersTexts = addTextToList(userID);
-
-        textsChecks.checkingForTextsInList(usersTexts);
-
-            usersTexts.clear();
-
-            String SQL_DELETE_IDS = "DELETE FROM user_text WHERE user_id = ?";
-
         List<Long> text_ids = jdbcTemplate.queryForList(
                 SQL_SELECT_TEXT_ID_FROM_USER_TEXT,
                 Long.class,
@@ -78,13 +70,14 @@ public class TextRepository {
 
         textsChecks.checkingForIDInList(text_ids);
 
-            jdbcTemplate.update(SQL_DELETE_IDS, userID);
+        String SQL_DELETE_IDS = "DELETE FROM user_text WHERE user_id = ?";
+        jdbcTemplate.update(SQL_DELETE_IDS, userID);
 
         for (Long id : text_ids) {
             jdbcTemplate.update("DELETE FROM texts WHERE id = ?", id);
         }
 
-            return "All texts have been deleted!";
+        return "All texts have been deleted!";
     }
 
     public String deleteChosenText(TextDBEntity textDBEntity, Long userID) {

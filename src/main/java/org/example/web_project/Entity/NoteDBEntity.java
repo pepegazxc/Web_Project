@@ -45,6 +45,11 @@ public class NoteDBEntity {
     public static class Builder {
         private final NoteDBEntity noteDB = new NoteDBEntity();
 
+        public Builder id(Long id) {
+            noteDB.id = id;
+            return this;
+        }
+
         public Builder note(String note) {
             noteDB.setNote(note);
             return this;

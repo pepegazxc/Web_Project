@@ -1,5 +1,6 @@
 package org.example.web_project.Controller;
 
+import org.apache.catalina.User;
 import org.example.web_project.DTO.NoteDTO;
 import org.example.web_project.Service.AccessTokenService;
 import org.example.web_project.Service.NoteService;
@@ -56,6 +57,9 @@ public class NotesController {
     @GetMapping("/updateChosenText")
     public String updateChosenText() {return "updateChosenText";}
 
+    @GetMapping("/deleteChosenNote")
+    public String deleteChosenNote() {return "deleteChosenNote";}
+
     @GetMapping("/deleteChosenText")
     public String deleteChosenText() {return "deleteChosenText";}
 
@@ -71,6 +75,13 @@ public class NotesController {
         List<NoteDTO> userNotes = noteService.showAllNotesWithData();
         model.addAttribute("userNotes", userNotes);
         return "showNote";
+    }
+
+    @DeleteMapping("/deleteChosenNote")
+    public String deleteChosenNote(UserRequest userRequest, Model model) {
+        noteService.deleteChosenNote(userRequest);
+        model.addAttribute("messageToUser", "Chosen note has been deleted!");
+        return "deleteChosenNote";
     }
 
     @DeleteMapping("/showNote")
