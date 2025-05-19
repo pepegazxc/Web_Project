@@ -27,8 +27,13 @@ public class TextRepository {
     private static final String SQL_INSERT_NEW_TEXT =
             "INSERT INTO texts(text) VALUES (?)";
 
-    private static final String SQL_SELECT_TEXT_ID_FROM_USER_TEXT =
-            "SELECT text_id FROM user_text WHERE user_id = ?";
+    private static final String SQL_DELETE_USER_ID_AND_TEXT_ID_BY_USER_ID =
+            "DELETE FROM user_text WHERE user_id = ?";
+
+    private static final String SQL_DELETE_USER_ID_AND_TEXT_ID_BY_TEXT_ID =
+            "DELETE FROM user_text WHERE text_id = ?";
+
+    private static final String SQL_DELETE_TEXT_BY_ID = "DELETE FROM texts WHERE id = ?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -63,17 +68,11 @@ public class TextRepository {
     }
 
     public String deleteAllTexts(Long userID) {
-        List<Long> text_ids = jdbcTemplate.queryForList(
-                SQL_SELECT_TEXT_ID_FROM_USER_TEXT,
-                Long.class,
-                userID);
+        List<Long> textIds = addIdsToList(userID);
 
-        textsChecks.checkingForIDInList(text_ids);
+        jdbcTemplate.update(SQL_DELETE_USER_ID_AND_TEXT_ID_BY_USER_ID, userID);
 
-        String SQL_DELETE_IDS = "DELETE FROM user_text WHERE user_id = ?";
-        jdbcTemplate.update(SQL_DELETE_IDS, userID);
-
-        for (Long id : text_ids) {
+        for (Long id : textIds) {
             jdbcTemplate.update("DELETE FROM texts WHERE id = ?", id);
         }
 
@@ -92,11 +91,8 @@ public class TextRepository {
 
         usersTexts.remove(textDBEntity.getId());
 
-        String SQL_DELETE_SPECIFIC_IDS_BY_ID = "DELETE FROM user_text WHERE text_id = ?";
-        String SQL_DELETE_SPECIFIC_TEXT_BY_ID = "DELETE FROM texts WHERE id = ?";
-
-        jdbcTemplate.update(SQL_DELETE_SPECIFIC_IDS_BY_ID, textDBEntity.getId());
-        jdbcTemplate.update(SQL_DELETE_SPECIFIC_TEXT_BY_ID, textDBEntity.getId());
+        jdbcTemplate.update(SQL_DELETE_USER_ID_AND_TEXT_ID_BY_TEXT_ID, textDBEntity.getId());
+        jdbcTemplate.update(SQL_DELETE_TEXT_BY_ID, textDBEntity.getId());
 
         return "Chosen texts have been deleted!";
     }
@@ -117,34 +113,14 @@ public class TextRepository {
         return "Chosen texts have been updated!";
     }
 
-
-    private List<String> addTextToList(Long userID) {
-        List<Long> text_ids = jdbcTemplate.queryForList(SQL_SELECT_TEXT_ID,
-                Long.class,
-                userID
-        );
-
-        textsChecks.checkingForIDInList(text_ids);
-
-        String IN_SQL = String.join(",", Collections.nCopies(text_ids.size(), "?"));
-        String SQL_SELECT_USER_TEXTS = "SELECT * FROM texts WHERE id IN (" + IN_SQL + ")";
-
-        return jdbcTemplate.queryForList(SQL_SELECT_USER_TEXTS, String.class, text_ids.toArray());
-    }
-
     private Map<Long, String> addTextToMap(Long userID) {
-        List<Long> text_ids = jdbcTemplate.queryForList(SQL_SELECT_TEXT_ID,
-                Long.class,
-                userID
-        );
+        List<Long> textIds = addIdsToList(userID);
 
-        textsChecks.checkingForIDInList(text_ids);
+        String inSql = String.join(",", Collections.nCopies(textIds.size(), "?"));
+        String selectFromTextById = "SELECT * FROM texts WHERE id IN (" + inSql + ")";
 
-        String IN_SQL = String.join(",", Collections.nCopies(text_ids.size(), "?"));
-        String SQL_SELECT_USER_TEXTS = "SELECT * FROM texts WHERE id IN (" + IN_SQL + ")";
-
-        return jdbcTemplate.query(SQL_SELECT_USER_TEXTS,
-                text_ids.toArray(),
+        return jdbcTemplate.query(selectFromTextById,
+                textIds.toArray(),
                 rs -> {
             Map<Long, String> result = new HashMap<>();
             while(rs.next()){
@@ -154,11 +130,22 @@ public class TextRepository {
         });
     }
 
+    private List<Long> addIdsToList(Long userID){
+        List<Long> textIds = jdbcTemplate.queryForList(SQL_SELECT_TEXT_ID,
+                Long.class,
+                userID
+        );
+
+        textsChecks.checkingForIDInList(textIds);
+
+        return textIds;
+    }
+
     private boolean isTextBelongsToUser(Long textId, Long userId) {
-        String SQL_CHECK_OWNERSHIP = """
+        String checkOwnership = """
         SELECT COUNT(*) FROM user_text WHERE text_id = ? AND user_id = ?
     """;
-        Integer count = jdbcTemplate.queryForObject(SQL_CHECK_OWNERSHIP, Integer.class, textId, userId);
+        Integer count = jdbcTemplate.queryForObject(checkOwnership, Integer.class, textId, userId);
         return count != null && count > 0;
     }
 }

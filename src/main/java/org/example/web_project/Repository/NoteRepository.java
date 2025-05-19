@@ -18,9 +18,17 @@ public class NoteRepository {
     private static final String SQL_INSERT_NEW_NOTE =
             "INSERT INTO notes(note) VALUES (?)";
 
-    private static final
-    String SQL_SELECT_NOTE_ID_FROM_USER_NOTE =
-            "SELECT note_id FROM user_note WHERE user_id = ?";
+    private static final String SQL_DELETE_USER_ID_AND_NOTE_ID_BY_NOTE_ID =
+            "DELETE FROM user_note WHERE note_id = ?";
+
+    private static final String SQL_DELETE_NOTE_BY_ID =
+            "DELETE FROM notes WHERE id = ?";
+
+    private static final String SQL_UPDATE_CHOSEN_TEXT =
+            "UPDATE notes SET note = ? WHERE id = ?";
+
+    private static final String SQL_DElETE_USER_ID_AND_NOTE_ID_BY_USER_ID =
+            "DELETE FROM user_note WHERE user_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final NotesChecks notesChecks;
@@ -64,8 +72,7 @@ public class NoteRepository {
     public String deleteAllUserNotes(Long userID){
         List<Long> notesIds = addNoteIdsToList(userID);
 
-        String deleteUserIdAndNoteIdByUserId = "DELETE FROM user_note WHERE user_id = ?";
-        jdbcTemplate.update(deleteUserIdAndNoteIdByUserId, userID);
+        jdbcTemplate.update(SQL_DElETE_USER_ID_AND_NOTE_ID_BY_USER_ID, userID);
 
         for (Long noteId : notesIds) {
             jdbcTemplate.update("DELETE FROM notes WHERE id = ?", noteId);
@@ -81,11 +88,8 @@ public class NoteRepository {
             throw new NoAccessToEditing("You are not allowed to delete this note!");
         }
 
-        String deleteUserIdAndNoteIdByUserId = "DELETE FROM user_note WHERE note_id = ?";
-        String deleteNoteById = "DELETE FROM notes WHERE id = ?";
-
-        jdbcTemplate.update(deleteUserIdAndNoteIdByUserId, noteDBEntity.getId());
-        jdbcTemplate.update(deleteNoteById, noteDBEntity.getId());
+        jdbcTemplate.update(SQL_DELETE_USER_ID_AND_NOTE_ID_BY_NOTE_ID, noteDBEntity.getId());
+        jdbcTemplate.update(SQL_DELETE_NOTE_BY_ID, noteDBEntity.getId());
 
         return "Chosen notes have been deleted!";
     }
@@ -98,9 +102,7 @@ public class NoteRepository {
             throw new NoAccessToEditing("You are not allowed to update this note!");
         }
 
-        String updateChosenText = "UPDATE notes SET note = ? WHERE id = ?";
-
-        jdbcTemplate.update(updateChosenText, noteDBEntity.getNote(), noteDBEntity.getId());
+        jdbcTemplate.update(SQL_UPDATE_CHOSEN_TEXT, noteDBEntity.getNote(), noteDBEntity.getId());
 
         return "Chosen notes have been updated!";
     }
@@ -117,10 +119,10 @@ public class NoteRepository {
 
 
     private boolean isNoteBelongsToUser(Long noteId, Long userId) {
-        String SQL_CHECK_OWNERSHIP = """
+        String checkOwnership = """
         SELECT COUNT(*) FROM user_note WHERE note_id = ? AND user_id = ?
     """;
-        Integer count = jdbcTemplate.queryForObject(SQL_CHECK_OWNERSHIP, Integer.class, noteId, userId);
+        Integer count = jdbcTemplate.queryForObject(checkOwnership, Integer.class, noteId, userId);
         return count != null && count > 0;
     }
 }
