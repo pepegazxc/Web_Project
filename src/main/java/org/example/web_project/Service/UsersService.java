@@ -24,9 +24,9 @@ public class UsersService {
         UsersDataBaseEntity user = new UsersDataBaseEntity.Builder()
                 .name(userRequest.getName())
                 .surname(userRequest.getSurname())
-                .phone_number(userRequest.getPhone_number())
+                .phoneNumber(userRequest.getPhone_number())
                 .email(userRequest.getEmail())
-                .user_name(userRequest.getUser_name())
+                .userName(userRequest.getUser_name())
                 .password(userRequest.getPassword())
                 .build();
 
@@ -36,7 +36,7 @@ public class UsersService {
     public void loginUser(UserRequest userRequest) {
         UsersDataBaseEntity user = new UsersDataBaseEntity.Builder()
                 .password(userRequest.getPassword())
-                .user_name(userRequest.getUser_name())
+                .userName(userRequest.getUser_name())
                 .build();
 
         usersRepository.loginUser(user);

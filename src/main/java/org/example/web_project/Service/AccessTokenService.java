@@ -30,7 +30,7 @@ public class AccessTokenService {
 
     public void assignTokenToLoginUser(UserRequest userRequest) {
         UsersDataBaseEntity usersDBEntity = new UsersDataBaseEntity.Builder()
-                .user_name(userRequest.getUser_name())
+                .userName(userRequest.getUser_name())
                 .build();
         userSessionStorage.addUserID(usersRepository.getUserID(usersDBEntity));
         userSessionStorage.addToken(accessTokenRepository.assignTokenToLoginUser());

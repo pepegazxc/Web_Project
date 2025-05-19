@@ -11,15 +11,15 @@ public class UserChecks {
         if (usersDBEntity.getName() == null || usersDBEntity.getName().isEmpty() ||
         usersDBEntity.getSurname() == null || usersDBEntity.getSurname().isEmpty() ||
         usersDBEntity.getEmail() == null || usersDBEntity.getEmail().isEmpty() ||
-        usersDBEntity.getUser_name() == null || usersDBEntity.getUser_name().isEmpty() ||
+        usersDBEntity.getUserName() == null || usersDBEntity.getUserName().isEmpty() ||
         usersDBEntity.getPassword() == null || usersDBEntity.getPassword().isEmpty() ||
-        usersDBEntity.getPhone_number() == null || usersDBEntity.getPhone_number().isEmpty()) {
+        usersDBEntity.getPhoneNumber() == null || usersDBEntity.getPhoneNumber().isEmpty()) {
             throw new EmptyRequest("Please, fill all the required fields.");
         }
     }
 
     public void loginFieldCheck(UsersDataBaseEntity usersDBEntity) {
-        if (usersDBEntity.getUser_name() == null || usersDBEntity.getUser_name().isEmpty() ||
+        if (usersDBEntity.getUserName() == null || usersDBEntity.getUserName().isEmpty() ||
         usersDBEntity.getPassword() == null || usersDBEntity.getPassword().isEmpty()) {
             throw new EmptyRequest("Please, fill all the required fields.");
         }

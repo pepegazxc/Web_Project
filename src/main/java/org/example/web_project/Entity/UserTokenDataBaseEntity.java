@@ -15,7 +15,7 @@ public class UserTokenDataBaseEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UsersDBEntity usersDBEntity;
+    private UsersDataBaseEntity UsersDataBaseEntity;
 
     public void setId(Long id) {
         this.id = id;

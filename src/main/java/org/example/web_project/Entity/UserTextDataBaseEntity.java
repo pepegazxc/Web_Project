@@ -15,14 +15,13 @@ public class UserTextDataBaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UsersDBEntity user;
+    private UsersDataBaseEntity user;
 
-
-    public UsersDBEntity getUsers() {
+    public UsersDataBaseEntity getUsers() {
         return user;
     }
 
-    public void setUsers(UsersDBEntity users) {
+    public void setUsers(UsersDataBaseEntity users) {
         this.user = users;
     }
 

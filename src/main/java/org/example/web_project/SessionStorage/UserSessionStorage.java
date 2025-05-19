@@ -5,11 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserSessionStorage {
 
-    // Передача и работа с добавлением в случае надобности и т.д
     private Long userID;
     private Long tokenID;
 
-    // САМ ACCESS TOKEN!!!
     private String token;
 
     public Long getUserID() {

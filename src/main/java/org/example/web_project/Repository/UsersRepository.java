@@ -45,9 +45,9 @@ public class UsersRepository {
                 PreparedStatement ps = connection.prepareStatement(SQL_INSERT_NEW_USER_DATA, new String[]{"id"});
                 ps.setString(1, usersDBEntity.getName());
                 ps.setString(2, usersDBEntity.getSurname());
-                ps.setString(3, usersDBEntity.getPhone_number());
+                ps.setString(3, usersDBEntity.getPhoneNumber());
                 ps.setString(4, usersDBEntity.getEmail());
-                ps.setString(5, usersDBEntity.getUser_name());
+                ps.setString(5, usersDBEntity.getUserName());
                 ps.setString(6, usersDBEntity.getPassword());
                 return ps;
                 }, keyHolder);
@@ -65,7 +65,7 @@ public class UsersRepository {
                 String userName = jdbcTemplate.queryForObject(
                         SQL_SELECT_USERNAME_FOR_LOGIN_USER,
                         new Object[]{
-                                usersDBEntity.getUser_name(),
+                                usersDBEntity.getUserName(),
                                 usersDBEntity.getPassword()
                         },
                         String.class
@@ -80,7 +80,7 @@ public class UsersRepository {
         Long userID = jdbcTemplate.queryForObject(
                 SQL_SELECT_USER_ID,
                 new Object[]{
-                        usersDBEntity.getUser_name()
+                        usersDBEntity.getUserName()
                 },
                 Long.class
         );

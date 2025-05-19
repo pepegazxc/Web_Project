@@ -14,23 +14,23 @@ public class UsersDataBaseEntity {
 
     private String surname;
 
-    @Column(unique = true)
-    private String phone_number;
+    @Column(unique = true ,name = "phone_number")
+    private String phoneNumber;
 
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String user_name;
+    @Column(unique = true, name = "user_name")
+    private String userName;
 
     private String password;
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -57,12 +57,12 @@ public class UsersDataBaseEntity {
         this.surname = surname;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -92,16 +92,16 @@ public class UsersDataBaseEntity {
             user.setSurname(surname);
             return this;
         }
-        public Builder phone_number(String phone_number) {
-            user.setPhone_number(phone_number);
+        public Builder phoneNumber(String phoneNumber) {
+            user.setPhoneNumber(phoneNumber);
             return this;
         }
         public Builder email(String email) {
             user.setEmail(email);
             return this;
         }
-        public Builder user_name(String user_name) {
-            user.setUser_name(user_name);
+        public Builder userName(String userName) {
+            user.setUserName(userName);
             return this;
         }
         public Builder password(String password) {

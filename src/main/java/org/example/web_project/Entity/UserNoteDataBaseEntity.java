@@ -15,7 +15,7 @@ public class UserNoteDataBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UsersDBEntity user;
+    private UsersDataBaseEntity user;
 
     public void setId(Long id) {
         this.id = id;
