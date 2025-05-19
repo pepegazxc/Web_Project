@@ -45,11 +45,7 @@ public class NoteRepository {
     }
 
     public List<NoteDTO> getAllNotesWithData(Long userID){
-        List<Long> notesIds = jdbcTemplate.queryForList("select note_id from user_note where user_id = ?",
-                Long.class,
-                userID);
-
-        notesChecks.checkingForNoteIdsInList(notesIds);
+        List<Long> notesIds = addNoteIdsToList(userID);
 
         String inSql = String.join(",", Collections.nCopies(notesIds.size(), "?"));
         String query = "SELECT * FROM notes WHERE id IN (" + inSql + ")";
@@ -66,12 +62,7 @@ public class NoteRepository {
     }
 
     public String deleteAllUserNotes(Long userID){
-        List<Long> notesIds = jdbcTemplate.queryForList(
-                SQL_SELECT_NOTE_ID_FROM_USER_NOTE,
-                Long.class,
-                userID);
-
-        notesChecks.checkingForNoteIdsInList(notesIds);
+        List<Long> notesIds = addNoteIdsToList(userID);
 
         String deleteUserIdAndNoteIdByUserId = "DELETE FROM user_note WHERE user_id = ?";
         jdbcTemplate.update(deleteUserIdAndNoteIdByUserId, userID);
@@ -114,26 +105,16 @@ public class NoteRepository {
         return "Chosen notes have been updated!";
     }
 
-    private Map<Long, String> addNotesToMap(Long userID){
+    private List<Long> addNoteIdsToList(Long userID){
         List<Long> notesIds = jdbcTemplate.queryForList("select note_id from user_note where user_id = ?",
                 Long.class,
                 userID);
 
         notesChecks.checkingForNoteIdsInList(notesIds);
 
-        String inSql = String.join(",", Collections.nCopies(notesIds.size(), "?"));
-        String selectIdUserNotes = "SELECT id,note FROM notes WHERE id IN (" + inSql + ")";
-
-        return jdbcTemplate.query(selectIdUserNotes,
-                notesIds.toArray(),
-                rs -> {
-            Map<Long, String> result = new HashMap<>();
-                    while (rs.next()) {
-                        result.put(rs.getLong("id"), rs.getString("text"));
-                    }
-                    return result;
-        });
+        return  notesIds;
     }
+
 
     private boolean isNoteBelongsToUser(Long noteId, Long userId) {
         String SQL_CHECK_OWNERSHIP = """
