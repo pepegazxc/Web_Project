@@ -30,56 +30,56 @@ public class TextService {
 
     public void addNewText(UserRequest userRequest) {
         String token = userSessionStorage.getToken();
-        Long user_id = userSessionStorage.getUserID();
+        Long userId = userSessionStorage.getUserID();
 
-        userTokenRepository.checkToken(token, user_id);
+        userTokenRepository.checkToken(token, userId);
         TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .text(userRequest.getText())
                 .build();
 
-        Long text_id = textRepository.addNewText(textDBEntity);
+        Long textId = textRepository.addNewText(textDBEntity);
 
-        userTextRepository.addNewUserText(user_id, text_id);
+        userTextRepository.addNewUserText(userId, textId);
     }
 
     public Map<Long, String> showAllTexts() {
         String token = userSessionStorage.getToken();
-        Long user_id = userSessionStorage.getUserID();
+        Long userId = userSessionStorage.getUserID();
 
-        userTokenRepository.checkToken(token, user_id);
-        return textRepository.showAllTexts(user_id);
+        userTokenRepository.checkToken(token, userId);
+        return textRepository.showAllTexts(userId);
     }
 
     public void deleteAllTexts() {
         String token = userSessionStorage.getToken();
-        Long user_id = userSessionStorage.getUserID();
+        Long userId = userSessionStorage.getUserID();
 
-        userTokenRepository.checkToken(token, user_id);
-        textRepository.deleteAllTexts(user_id);
+        userTokenRepository.checkToken(token, userId);
+        textRepository.deleteAllTexts(userId);
     }
 
     public void deleteChosenText(UserRequest userRequest) {
         String token = userSessionStorage.getToken();
-        Long user_id = userSessionStorage.getUserID();
+        Long userId = userSessionStorage.getUserID();
 
-        userTokenRepository.checkToken(token, user_id);
+        userTokenRepository.checkToken(token, userId);
         TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .id(userRequest.getId())
                 .build();
 
-        textRepository.deleteChosenText(textDBEntity, user_id);
+        textRepository.deleteChosenText(textDBEntity, userId);
     }
 
     public void updateChosenText(UserRequest userRequest) {
         String token = userSessionStorage.getToken();
-        Long user_id = userSessionStorage.getUserID();
+        Long userId = userSessionStorage.getUserID();
 
-        userTokenRepository.checkToken(token, user_id);
+        userTokenRepository.checkToken(token, userId);
         TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .id(userRequest.getId())
                 .text(userRequest.getText())
                 .build();
 
-        textRepository.updateChosenText(textDBEntity, user_id);
+        textRepository.updateChosenText(textDBEntity, userId);
     }
 }
