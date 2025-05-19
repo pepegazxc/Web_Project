@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "texts")
-public class TextDBEntity {
+public class TextDataBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +28,7 @@ public class TextDBEntity {
     }
 
     public static class Builder {
-        private final TextDBEntity textDBEntity = new TextDBEntity();
+        private final TextDataBaseEntity textDBEntity = new TextDataBaseEntity();
 
         public Builder text(String text) {
             textDBEntity.setText(text);
@@ -38,7 +38,7 @@ public class TextDBEntity {
             textDBEntity.setId(id);
             return this;
         }
-        public TextDBEntity build() {
+        public TextDataBaseEntity build() {
             return textDBEntity;
         }
     }

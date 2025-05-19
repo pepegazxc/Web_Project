@@ -2,7 +2,7 @@ package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.NotesChecks;
 import org.example.web_project.DTO.NoteDTO;
-import org.example.web_project.Entity.NoteDBEntity;
+import org.example.web_project.Entity.NoteDataBaseEntity;
 import org.example.web_project.Exceptions.NoAccessToEditing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,7 +31,7 @@ public class NoteRepository {
         this.notesChecks = notesChecks;
     }
 
-    public Long addNewNote(NoteDBEntity noteDBEntity) {
+    public Long addNewNote(NoteDataBaseEntity noteDBEntity) {
         notesChecks.noteFieldCheck(noteDBEntity);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -83,7 +83,7 @@ public class NoteRepository {
         return "All notes have been deleted!";
     }
 
-    public String deleteChosenNotes(Long userID, NoteDBEntity noteDBEntity) {
+    public String deleteChosenNotes(Long userID, NoteDataBaseEntity noteDBEntity) {
         notesChecks.checkingForIdOfNote(noteDBEntity);
 
         if(!isNoteBelongsToUser(noteDBEntity.getId(), userID)) {
@@ -99,7 +99,7 @@ public class NoteRepository {
         return "Chosen notes have been deleted!";
     }
 
-    public String updateChosenNote(NoteDBEntity noteDBEntity, Long userID) {
+    public String updateChosenNote(NoteDataBaseEntity noteDBEntity, Long userID) {
         notesChecks.checkingForIdOfNote(noteDBEntity);
         notesChecks.noteFieldCheck(noteDBEntity);
 

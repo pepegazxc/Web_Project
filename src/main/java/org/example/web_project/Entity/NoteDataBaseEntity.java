@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notes")
-public class NoteDBEntity {
+public class NoteDataBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +43,7 @@ public class NoteDBEntity {
     }
 
     public static class Builder {
-        private final NoteDBEntity noteDB = new NoteDBEntity();
+        private final NoteDataBaseEntity noteDB = new NoteDataBaseEntity();
 
         public Builder id(Long id) {
             noteDB.id = id;
@@ -55,7 +55,7 @@ public class NoteDBEntity {
             return this;
         }
 
-        public NoteDBEntity build() {
+        public NoteDataBaseEntity build() {
             return noteDB;
         }
     }

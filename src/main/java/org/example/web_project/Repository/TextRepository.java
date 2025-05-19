@@ -1,7 +1,7 @@
 package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.TextsChecks;
-import org.example.web_project.Entity.TextDBEntity;
+import org.example.web_project.Entity.TextDataBaseEntity;
 import org.example.web_project.Exceptions.NoAccessToEditing;
 import org.example.web_project.Exceptions.NoAccessToDelete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class TextRepository {
         this.textsChecks = textsChecks;
     }
 
-    public Long addNewText(TextDBEntity textDBEntity) {
+    public Long addNewText(TextDataBaseEntity textDBEntity) {
         textsChecks.textFieldCheck(textDBEntity);
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -80,7 +80,7 @@ public class TextRepository {
         return "All texts have been deleted!";
     }
 
-    public String deleteChosenText(TextDBEntity textDBEntity, Long userID) {
+    public String deleteChosenText(TextDataBaseEntity textDBEntity, Long userID) {
         Map<Long, String> usersTexts = addTextToMap(userID);
 
         textsChecks.checkingForTextsInMap(usersTexts);
@@ -101,7 +101,7 @@ public class TextRepository {
         return "Chosen texts have been deleted!";
     }
 
-    public String updateChosenText(TextDBEntity textDBEntity, Long userID) {
+    public String updateChosenText(TextDataBaseEntity textDBEntity, Long userID) {
         Map<Long, String> usersTexts = addTextToMap(userID);
 
         textsChecks.checkingForTextsInMap(usersTexts);

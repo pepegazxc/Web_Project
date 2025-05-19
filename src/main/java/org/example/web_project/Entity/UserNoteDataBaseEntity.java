@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user_note")
-public class User_noteDBEntity {
+public class UserNoteDataBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "note_id")
-    private NoteDBEntity note;
+    private NoteDataBaseEntity note;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

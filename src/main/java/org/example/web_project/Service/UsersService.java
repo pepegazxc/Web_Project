@@ -1,6 +1,6 @@
 package org.example.web_project.Service;
 
-import org.example.web_project.Entity.UsersDBEntity;
+import org.example.web_project.Entity.UsersDataBaseEntity;
 import org.example.web_project.Repository.*;
 import org.example.web_project.SessionStorage.UserSessionStorage;
 import org.example.web_project.DTO.UserRequest;
@@ -21,7 +21,7 @@ public class UsersService {
     }
 
     public void addNewUser(UserRequest userRequest) {
-        UsersDBEntity user = new UsersDBEntity.Builder()
+        UsersDataBaseEntity user = new UsersDataBaseEntity.Builder()
                 .name(userRequest.getName())
                 .surname(userRequest.getSurname())
                 .phone_number(userRequest.getPhone_number())
@@ -34,7 +34,7 @@ public class UsersService {
     }
 
     public void loginUser(UserRequest userRequest) {
-        UsersDBEntity user = new UsersDBEntity.Builder()
+        UsersDataBaseEntity user = new UsersDataBaseEntity.Builder()
                 .password(userRequest.getPassword())
                 .user_name(userRequest.getUser_name())
                 .build();

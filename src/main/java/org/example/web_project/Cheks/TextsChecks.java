@@ -1,7 +1,6 @@
 package org.example.web_project.Cheks;
 
-import org.example.web_project.Entity.TextDBEntity;
-import org.example.web_project.Entity.UsersDBEntity;
+import org.example.web_project.Entity.TextDataBaseEntity;
 import org.example.web_project.Exceptions.EmptyID;
 import org.example.web_project.Exceptions.EmptyRequest;
 import org.example.web_project.Exceptions.EmptyStorage;
@@ -13,13 +12,13 @@ import java.util.Map;
 @Component
 public class TextsChecks {
 
-    public void textFieldCheck (TextDBEntity textDBEntity) {
+    public void textFieldCheck (TextDataBaseEntity textDBEntity) {
         if (textDBEntity.getText() == null || textDBEntity.getText().isEmpty()) {
             throw new EmptyRequest("Please, fill in all the fields");
         }
     }
 
-    public void chooseTextIDCheck (TextDBEntity textDBEntity) {
+    public void chooseTextIDCheck (TextDataBaseEntity textDBEntity) {
         if (textDBEntity.getId() == null || textDBEntity.getId() == 0) {
             throw new EmptyRequest("Please, fill in all the fields");
         }

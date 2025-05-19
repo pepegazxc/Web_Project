@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user_token")
-public class User_tokenDBEntity {
+public class UserTokenDataBaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
     @JoinColumn(name = "token_id")
-    private Access_tokenDBEntity token;
+    private AccessTokenDataBaseEntity token;
 
     @OneToOne
     @JoinColumn(name = "user_id")

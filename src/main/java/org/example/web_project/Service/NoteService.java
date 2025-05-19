@@ -1,7 +1,7 @@
 package org.example.web_project.Service;
 
 import org.example.web_project.DTO.NoteDTO;
-import org.example.web_project.Entity.NoteDBEntity;
+import org.example.web_project.Entity.NoteDataBaseEntity;
 import org.example.web_project.Repository.NoteRepository;
 import org.example.web_project.Repository.UserNoteRepository;
 import org.example.web_project.Repository.UserTokenRepository;
@@ -33,7 +33,7 @@ public class NoteService {
         String token = userSessionStorage.getToken();
 
         userTokenRepository.checkToken(token, userID);
-        NoteDBEntity noteDB = new NoteDBEntity.Builder()
+        NoteDataBaseEntity noteDB = new NoteDataBaseEntity.Builder()
                 .note(userRequest.getNote())
                 .build();
 
@@ -65,7 +65,7 @@ public class NoteService {
         String token = userSessionStorage.getToken();
 
         userTokenRepository.checkToken(token, userID);
-        NoteDBEntity noteDBEntity = new NoteDBEntity.Builder()
+        NoteDataBaseEntity noteDBEntity = new NoteDataBaseEntity.Builder()
                 .id(userRequest.getId())
                 .build();
 
@@ -79,7 +79,7 @@ public class NoteService {
 
         userTokenRepository.checkToken(token, userID);
 
-        NoteDBEntity noteDBEntity = new NoteDBEntity.Builder()
+        NoteDataBaseEntity noteDBEntity = new NoteDataBaseEntity.Builder()
                 .note(userRequest.getNote())
                 .id(userRequest.getId())
                 .build();

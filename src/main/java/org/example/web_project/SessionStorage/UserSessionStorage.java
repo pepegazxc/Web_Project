@@ -2,9 +2,6 @@ package org.example.web_project.SessionStorage;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class UserSessionStorage {
 

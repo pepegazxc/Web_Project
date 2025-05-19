@@ -1,6 +1,6 @@
 package org.example.web_project.Service;
 
-import org.example.web_project.Entity.TextDBEntity;
+import org.example.web_project.Entity.TextDataBaseEntity;
 import org.example.web_project.Repository.TextRepository;
 import org.example.web_project.Repository.UserTextRepository;
 import org.example.web_project.Repository.UserTokenRepository;
@@ -33,7 +33,7 @@ public class TextService {
         Long user_id = userSessionStorage.getUserID();
 
         userTokenRepository.checkToken(token, user_id);
-        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+        TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .text(userRequest.getText())
                 .build();
 
@@ -63,7 +63,7 @@ public class TextService {
         Long user_id = userSessionStorage.getUserID();
 
         userTokenRepository.checkToken(token, user_id);
-        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+        TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .id(userRequest.getId())
                 .build();
 
@@ -75,7 +75,7 @@ public class TextService {
         Long user_id = userSessionStorage.getUserID();
 
         userTokenRepository.checkToken(token, user_id);
-        TextDBEntity textDBEntity = new TextDBEntity.Builder()
+        TextDataBaseEntity textDBEntity = new TextDataBaseEntity.Builder()
                 .id(userRequest.getId())
                 .text(userRequest.getText())
                 .build();

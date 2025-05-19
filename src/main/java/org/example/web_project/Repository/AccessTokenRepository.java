@@ -1,7 +1,5 @@
 package org.example.web_project.Repository;
 
-import org.example.web_project.Entity.Access_tokenDBEntity;
-import org.example.web_project.Security.AccessToken;
 import org.example.web_project.SessionStorage.UserSessionStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

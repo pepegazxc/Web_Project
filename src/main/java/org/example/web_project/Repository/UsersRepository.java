@@ -1,7 +1,7 @@
 package org.example.web_project.Repository;
 
 import org.example.web_project.Cheks.UserChecks;
-import org.example.web_project.Entity.UsersDBEntity;
+import org.example.web_project.Entity.UsersDataBaseEntity;
 import org.example.web_project.Exceptions.UserNotFound;
 import org.example.web_project.Exceptions.UserWithThatDataAlreadyExist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UsersRepository {
         this.userChecks = userChecks;
     }
 
-    public Long addNewUser(UsersDBEntity usersDBEntity) {
+    public Long addNewUser(UsersDataBaseEntity usersDBEntity) {
         userChecks.registrationFieldCheck(usersDBEntity);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -58,7 +58,7 @@ public class UsersRepository {
         }
     }
 
-    public String loginUser(UsersDBEntity usersDBEntity) {
+    public String loginUser(UsersDataBaseEntity usersDBEntity) {
         userChecks.loginFieldCheck(usersDBEntity);
 
             try {
@@ -76,7 +76,7 @@ public class UsersRepository {
             }
     }
 
-    public Long getUserID(UsersDBEntity usersDBEntity) {
+    public Long getUserID(UsersDataBaseEntity usersDBEntity) {
         Long userID = jdbcTemplate.queryForObject(
                 SQL_SELECT_USER_ID,
                 new Object[]{

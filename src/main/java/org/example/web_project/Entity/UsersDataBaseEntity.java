@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class UsersDBEntity {
+public class UsersDataBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,7 +82,7 @@ public class UsersDBEntity {
     }
 
     public static class Builder {
-        private final UsersDBEntity user = new UsersDBEntity();
+        private final UsersDataBaseEntity user = new UsersDataBaseEntity();
 
         public Builder name(String name) {
             user.setName(name);
@@ -108,7 +108,7 @@ public class UsersDBEntity {
             user.setPassword(password);
             return this;
         }
-        public UsersDBEntity build() {
+        public UsersDataBaseEntity build() {
             return user;
         }
     }

@@ -1,6 +1,6 @@
 package org.example.web_project.Service;
 
-import org.example.web_project.Entity.UsersDBEntity;
+import org.example.web_project.Entity.UsersDataBaseEntity;
 import org.example.web_project.Repository.AccessTokenRepository;
 import org.example.web_project.Repository.UserTokenRepository;
 import org.example.web_project.Repository.UsersRepository;
@@ -29,7 +29,7 @@ public class AccessTokenService {
     }
 
     public void assignTokenToLoginUser(UserRequest userRequest) {
-        UsersDBEntity usersDBEntity = new UsersDBEntity.Builder()
+        UsersDataBaseEntity usersDBEntity = new UsersDataBaseEntity.Builder()
                 .user_name(userRequest.getUser_name())
                 .build();
         userSessionStorage.addUserID(usersRepository.getUserID(usersDBEntity));
