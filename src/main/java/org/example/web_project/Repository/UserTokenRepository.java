@@ -32,19 +32,19 @@ public class UserTokenRepository {
 
     public void checkToken(String token, Long userID) {
 
-            Long token_id = jdbcTemplate.queryForObject(
+            Long tokenId = jdbcTemplate.queryForObject(
                     SQL_SELECT_FOR_TOKEN_ID,
                     Long.class,
                     token
             );
 
-            Long user_id = jdbcTemplate.queryForObject(
+            Long userId = jdbcTemplate.queryForObject(
                     SQL_SELECT_FOR_USER_ID,
                     Long.class,
-                    token_id
+                    tokenId
             );
 
-        if (!Objects.equals(user_id, userID)) {
+        if (!Objects.equals(userId, userID)) {
                 throw new TokenException("Something went wrong when checking token");
             }
     }
