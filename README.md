@@ -156,7 +156,7 @@
 
 ## 🗄️ База данных
 
-![alt text](screenshots/DataBaseDiagramm - Web_Project For REAME.png)
+![alt text](screenshots/DataBaseDiagramm-Web_ProjectForREAME.png)
 
 ---
 
